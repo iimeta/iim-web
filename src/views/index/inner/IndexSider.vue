@@ -15,6 +15,7 @@ import {
   EditTwo,
   IdCard,
   Plus,
+  CloseOne,
 } from "@icon-park/vue-next";
 import TalkItem from "./TalkItem.vue";
 import {
@@ -22,6 +23,7 @@ import {
   ServeClearTalkUnreadNum,
   ServeDeleteTalkList,
   ServeSetNotDisturb,
+  TalkClearContext,
 } from "@/api/chat";
 import { ServeSecedeGroup } from "@/api/group";
 import { ServeDeleteContact, ServeEditContactRemark } from "@/api/contact";
@@ -121,6 +123,17 @@ const onTabTalk = (data: any, follow = false) => {
 
 const onUserInfo = (data: any) => {
   user(data.receiver_id);
+};
+
+// 清空上下文
+const onTalkClearContext = (data: any) => {
+  TalkClearContext({
+    receiver_id: data.receiver_id,
+  }).then(({ code }) => {
+    if (code == 200) {
+      window["$message"].success("上下文已清空");
+    }
+  });
 };
 
 // 移除会话
@@ -293,6 +306,12 @@ const onContextMenuTalk = (e: any, item: ISessionRecord) => {
 
   options.push({
     icon: renderIcon(Clear),
+    label: "清空上下文",
+    key: "clear",
+  });
+
+  options.push({
+    icon: renderIcon(CloseOne),
     label: "移除会话",
     key: "remove",
   });
@@ -329,6 +348,7 @@ const onContextMenuTalkHandle = (key: string) => {
     info: onUserInfo,
     top: onToTopTalk,
     remove: onRemoveTalk,
+    clear: onTalkClearContext,
     disturb: onSetDisturb,
     signout_group: onSignOutGroup,
     delete_contact: onDeleteContact,

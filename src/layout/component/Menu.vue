@@ -127,9 +127,9 @@ const onClickMenu = menu => {
 
     <footer class="menu-footer">
       <div>
-        <!-- <a
+        <a
           class="pointer"
-          href="https://github.com/gzydong/LumenIM"
+          href="https://github.com/iimeta/iim-client"
           target="_blank"
         >
           <github-one
@@ -138,7 +138,7 @@ const onClickMenu = menu => {
             :fill="color"
             :strokeWidth="2"
           />
-        </a> -->
+        </a>
       </div>
       <div @click="onLogout" class="pointer">退出</div>
     </footer>

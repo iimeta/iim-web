@@ -111,3 +111,8 @@ export const ServeSendVote = (data = {}) => {
 export const ServeConfirmVoteHandle = (data = {}) => {
   return post('/api/v1/talk/message/vote/handle', data)
 }
+
+// 清空上下文接口
+export const TalkClearContext = (data = {}) => {
+  return post('/api/v1/talk/clear/context', data)
+}

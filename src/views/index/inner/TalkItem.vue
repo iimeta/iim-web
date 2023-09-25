@@ -1,5 +1,5 @@
 <script setup>
-import { ArrowUp, ArrowDown, CloseRemind } from '@icon-park/vue-next'
+import { ArrowUp, ArrowDown, CloseRemind, Power } from '@icon-park/vue-next'
 import Xtime from '@/components/base/Xtime.vue'
 
 const emit = defineEmits(['tab-talk', 'top-talk'])
@@ -66,8 +66,13 @@ defineProps({
         </div>
 
         <div class="tip">
+
           <div v-if="data.is_disturb" class="disturb">
             <n-icon :component="CloseRemind" />
+          </div>
+
+          <div v-if="data.is_open_context" class="disturb">
+            <n-icon :component="Power" />
           </div>
 
           <div v-else class="unread" v-show="data.unread_num">

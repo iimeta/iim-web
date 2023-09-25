@@ -16,6 +16,7 @@ import {
   IdCard,
   Plus,
   CloseOne,
+  Power,
 } from "@icon-park/vue-next";
 import TalkItem from "./TalkItem.vue";
 import {
@@ -23,6 +24,7 @@ import {
   ServeClearTalkUnreadNum,
   ServeDeleteTalkList,
   ServeSetNotDisturb,
+  TalkOpenContext,
   TalkClearContext,
 } from "@/api/chat";
 import { ServeSecedeGroup } from "@/api/group";
@@ -123,6 +125,27 @@ const onTabTalk = (data: any, follow = false) => {
 
 const onUserInfo = (data: any) => {
   user(data.receiver_id);
+};
+
+// 开启/关闭上下文
+const onTalkOpenContext = (data: any) => {
+  TalkOpenContext({
+    talk_type: data.talk_type,
+    receiver_id: data.receiver_id,
+    is_open_context: data.is_open_context == 0 ? 1 : 0,
+  }).then(({ code }) => {
+    if (code == 200) {
+      if (data.is_open_context == 0) {
+        window["$message"].success("上下文已关闭");
+      }else {
+        window["$message"].success("上下文已开启");
+      }
+      talkStore.updateItem({
+        index_name: data.index_name,
+        is_open_context: data.is_open_context == 0 ? 1 : 0,
+      });
+    }
+  });
 };
 
 // 清空上下文
@@ -305,6 +328,12 @@ const onContextMenuTalk = (e: any, item: ISessionRecord) => {
   });
 
   options.push({
+    icon: renderIcon(item.is_open_context ? Power : Power),
+    label: item.is_open_context ? "开启上下文" : "关闭上下文",
+    key: "context",
+  });
+
+  options.push({
     icon: renderIcon(Clear),
     label: "清空上下文",
     key: "clear",
@@ -348,6 +377,7 @@ const onContextMenuTalkHandle = (key: string) => {
     info: onUserInfo,
     top: onToTopTalk,
     remove: onRemoveTalk,
+    context: onTalkOpenContext,
     clear: onTalkClearContext,
     disturb: onSetDisturb,
     signout_group: onSignOutGroup,

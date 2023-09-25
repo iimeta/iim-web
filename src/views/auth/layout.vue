@@ -1,10 +1,10 @@
 <script setup>
-import { isElectronMode } from '@/utils/common'
+import { isElectronMode } from "@/utils/common";
 </script>
 
 <template>
   <!-- <div id="logo-name" v-if="!isElectronMode()">IIM</div> -->
-  <img  class ="logo" src="/logo.png"/>
+  <img class="logo" src="/logo.png" />
 
   <section class="section">
     <router-view />
@@ -12,8 +12,8 @@ import { isElectronMode } from '@/utils/common'
 
   <div class="copyright">
     <span>Copyright © 2023 IIM. All Rights Reserved.</span>
-    <br/>
-    <span>v0.9.23</span>
+    <br />
+    <span>v1.0.1</span>
   </div>
 
   <div class="fly-box">
@@ -28,7 +28,7 @@ import { isElectronMode } from '@/utils/common'
 body {
   -webkit-app-region: drag;
 }
-@import '@/assets/css/login.less';
+@import "@/assets/css/login.less";
 
 .section {
   height: 100vh;

@@ -14,6 +14,7 @@ export interface ISessionRecord {
     msg_text: string
     unread_num: number
     updated_at: string
+    is_open_context: number
 }
 
 // 消息记录

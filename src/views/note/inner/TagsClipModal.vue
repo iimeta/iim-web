@@ -1,59 +1,59 @@
 <script setup>
-import { computed } from 'vue'
-import { useNoteStore } from '@/store/note'
-import { ServeUpdateArticleTag } from '@/api/article'
-import { Close } from '@icon-park/vue-next'
+import { computed } from "vue";
+import { useNoteStore } from "@/store/note";
+import { ServeUpdateNoteTag } from "@/api/note";
+import { Close } from "@icon-park/vue-next";
 
-const store = useNoteStore()
-let loading = false
+const store = useNoteStore();
+let loading = false;
 const tags = computed(() => {
-  let ids = store.view.detail.tags.map(item => item.id)
+  let ids = store.view.detail.tags.map((item) => item.id);
 
-  return store.tags.map(tag => {
+  return store.tags.map((tag) => {
     return {
       id: tag.id,
       tag_name: tag.tag_name,
       is_check: ids.includes(tag.id),
-    }
-  })
-})
+    };
+  });
+});
 
 const onSave = (ids = []) => {
-  loading = true
+  loading = true;
 
-  ServeUpdateArticleTag({
-    article_id: store.view.detail.id,
+  ServeUpdateNoteTag({
+    note_id: store.view.detail.id,
     tags: ids,
   })
-    .then(res => {
+    .then((res) => {
       if (res.code == 200) {
-        store.view.detail.tags = ids.map(id => {
-          return { id }
-        })
+        store.view.detail.tags = ids.map((id) => {
+          return { id };
+        });
       }
     })
     .finally(() => {
-      loading = false
-    })
-}
+      loading = false;
+    });
+};
 
-const onActive = item => {
-  if (loading) return
+const onActive = (item) => {
+  if (loading) return;
 
-  let items = tags.value.filter(val => {
+  let items = tags.value.filter((val) => {
     if (item.id === val.id) {
-      return !val.is_check
+      return !val.is_check;
     }
 
-    return val.is_check
-  })
+    return val.is_check;
+  });
 
   if (!item.is_check && items.length > 5) {
-    return window['$message'].info('标签不能超过5个')
+    return window["$message"].info("标签不能超过5个");
   }
 
-  onSave(items.map(v => v.id))
-}
+  onSave(items.map((v) => v.id));
+};
 </script>
 
 <template>

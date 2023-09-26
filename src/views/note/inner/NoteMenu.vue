@@ -94,14 +94,17 @@ const loadWatchTagsMenu = () => {
   )
 }
 
-const getCalssId = () => {
+const getClassId = () => {
+
   let str = activedMenu.value
 
   if (str.substring(0, 1) != '2') {
-    return 0
+    return ''
   }
 
-  return parseInt(str.substring(2))
+  let classId = str.substring(2)
+
+  return classId == "undefined" ? '' : classId
 }
 
 // 一级菜单点击事件
@@ -161,7 +164,7 @@ const onToolsMenu = value => {
 
 const onEditNoteMenu = (e, i, i2, submenu) => {
   let name = e.target.value.trim()
-  let id = submenu.id == -1 ? 0 : submenu.id
+  let id = submenu.id == -1 ? '' : submenu.id
 
   // 删除
   if (name == '' && submenu.id == -1) {
@@ -244,7 +247,7 @@ loadWatchTagsMenu()
         round
         @click="
           () => {
-            store.addNewNote(getCalssId())
+            store.addNewNote(getClassId())
           }
         "
         class="btn-add"

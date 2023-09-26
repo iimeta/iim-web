@@ -1,18 +1,18 @@
 <script setup>
-import { Search, SortAmountDown, SortAmountUp } from '@icon-park/vue-next'
-import { NImage, NScrollbar } from 'naive-ui'
-import { useNoteStore } from '@/store/note'
-import { debounce } from '@/utils/common'
-import Loading from '@/components/base/Loading.vue'
-const store = useNoteStore()
+import { Search, SortAmountDown, SortAmountUp } from "@icon-park/vue-next";
+import { NImage, NScrollbar } from "naive-ui";
+import { useNoteStore } from "@/store/note";
+import { debounce } from "@/utils/common";
+import Loading from "@/components/base/Loading.vue";
+const store = useNoteStore();
 
-const onCatDetail = item => {
-  store.loadDetail(item.id)
-}
+const onCatDetail = (item) => {
+  store.loadDetail(item.id);
+};
 
-const onSearchInput = debounce(e => {
-  store.loadNoteList({}, false)
-}, 500)
+const onSearchInput = debounce((e) => {
+  store.loadNoteList({}, false);
+}, 500);
 </script>
 <template>
   <section class="el-container is-vertical section">
@@ -25,7 +25,7 @@ const onSearchInput = debounce(e => {
         type="text"
         class="search"
         v-model="store.notes.params.keyword"
-        placeholder="搜索我的笔记 ..."
+        placeholder="搜索笔记"
         maxlength="30"
         @input="onSearchInput"
       />
@@ -59,17 +59,17 @@ const onSearchInput = debounce(e => {
     <main class="el-main" v-else>
       <n-scrollbar>
         <div
-          class="article"
+          class="note"
           v-for="note in store.notes.items"
           :key="note.id"
           @click="onCatDetail(note)"
           :class="{ selectd: store.view.loadId == note.id }"
         >
-          <div class="article-title">
+          <div class="note-title">
             <span>{{ note.title }}</span>
           </div>
 
-          <div class="article-main pointer">
+          <div class="note-main pointer">
             <div class="content">
               <div class="datetime">
                 <span>{{ note.created_at.substr(0, 10) }}</span>
@@ -78,8 +78,8 @@ const onSearchInput = debounce(e => {
               <div class="abstract">
                 {{
                   note.abstract
-                    .replace(/[\r\n]/g, '')
-                    .replace(/(<([^>]+)>)/gi, '')
+                    .replace(/[\r\n]/g, "")
+                    .replace(/(<([^>]+)>)/gi, "")
                 }}
               </div>
             </div>
@@ -154,7 +154,7 @@ const onSearchInput = debounce(e => {
   }
 }
 
-.article {
+.note {
   min-height: 50px;
   padding: 10px 10px 5px 10px;
   position: relative;
@@ -162,7 +162,7 @@ const onSearchInput = debounce(e => {
   margin: 8px 5px;
   transition: border 0.1s;
 
-  .article-title {
+  .note-title {
     height: 24px;
     line-height: 24px;
     font-size: 14px;
@@ -176,7 +176,7 @@ const onSearchInput = debounce(e => {
     }
   }
 
-  .article-main {
+  .note-main {
     display: flex;
     align-items: center;
 
@@ -223,7 +223,7 @@ const onSearchInput = debounce(e => {
   }
 
   &.selectd {
-    .article-title {
+    .note-title {
       color: #5c504c;
       font-weight: bold;
     }
@@ -232,7 +232,7 @@ const onSearchInput = debounce(e => {
   }
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   .section {
     --sub-header-border-color: #1f1f23;
 

@@ -1,6 +1,6 @@
 <script setup>
-import { computed, watch, reactive, ref } from 'vue'
-import { NPopover } from 'naive-ui'
+import { computed, watch, reactive, ref } from "vue";
+import { NPopover } from "naive-ui";
 import {
   Share,
   Delete as IconDelete,
@@ -11,204 +11,205 @@ import {
   EditOne,
   FullScreen,
   OffScreen,
-} from '@icon-park/vue-next'
-import Loading from '@/components/base/Loading.vue'
-import AnnexUploadModal from './AnnexUploadModal.vue'
-import TagsClipModal from './TagsClipModal.vue'
-import { debounce } from '@/utils/common'
+} from "@icon-park/vue-next";
+import Loading from "@/components/base/Loading.vue";
+import AnnexUploadModal from "./AnnexUploadModal.vue";
+import TagsClipModal from "./TagsClipModal.vue";
+import { debounce } from "@/utils/common";
 import {
-  ServeSetAsteriskArticle,
-  ServeUploadArticleImg,
-  ServeEditArticle,
-  ServeDeleteArticle,
-} from '@/api/article'
+  ServeSetAsteriskNote,
+  ServeUploadNoteImg,
+  ServeEditNote,
+  ServeDeleteNote,
+} from "@/api/note";
 
-import { useNoteStore } from '@/store/note'
+import { useNoteStore } from "@/store/note";
 
-const store = useNoteStore()
+const store = useNoteStore();
 
-const isFull = ref(false)
-const detail = computed(() => store.view.detail)
+const isFull = ref(false);
+const detail = computed(() => store.view.detail);
 
 const editor = reactive({
   title: detail.value.title,
   markdown: detail.value.md_content,
   html: detail.value.content,
-})
+});
 
 watch(
   () => store.view.detail.id,
   () => {
-    editor.html = store.view.detail.content
-    editor.markdown = store.view.detail.md_content
-    editor.title = store.view.detail.title
+    editor.html = store.view.detail.content;
+    editor.markdown = store.view.detail.md_content;
+    editor.title = store.view.detail.title;
   }
-)
+);
 
 // 加载状态
-const loadStatus = computed(() => store.view.loadStatus)
+const loadStatus = computed(() => store.view.loadStatus);
 
-const loading = ref(false)
+const loading = ref(false);
 
 const editorMode = computed(() =>
-  store.view.editorMode == 'preview' ? false : 'plaintext-only'
-)
+  store.view.editorMode == "preview" ? false : "plaintext-only"
+);
 
 const onFull = () => {
-  isFull.value = !isFull.value
-}
+  isFull.value = !isFull.value;
+};
 
 // 上传笔记图片
 const onUploadImage = (event, insertImage, files) => {
-  if (!files.length) return
+  if (!files.length) return;
 
-  let formdata = new FormData()
-  formdata.append('image', files[0])
+  let formdata = new FormData();
+  formdata.append("image", files[0]);
 
-  ServeUploadArticleImg(formdata).then(res => {
+  ServeUploadNoteImg(formdata).then((res) => {
     if (res.code == 200) {
       insertImage({
         url: res.data.url,
         desc: files[0].name,
-      })
+      });
     } else {
-      window['$message'].info(res.message)
+      window["$message"].info(res.message);
     }
-  })
-}
+  });
+};
 
 // 编辑器变动事件
 const onChange = (text, html) => {
-  editor.markdown = text
-  editor.html = html
-}
+  editor.markdown = text;
+  editor.html = html;
+};
 
 // 保存笔记
-const onSave = isCloseEditMode => {
-  let data = detail.value
+const onSave = (isCloseEditMode) => {
+  
+  let data = detail.value;
 
-  if (editor.markdown == '' && data.id == 0) {
-    store.close()
-    return
+  if (editor.markdown == "" && data.id == '') {
+    store.close();
+    return;
   }
 
-  loading.value = true
-  ServeEditArticle({
-    article_id: data.id,
+  loading.value = true;
+  ServeEditNote({
+    note_id: data.id,
     class_id: data.class_id,
     title: editor.title,
     md_content: editor.markdown,
     content: editor.html,
   })
-    .then(res => {
+    .then((res) => {
       if (res.code != 200) {
-        return window['$message'].info(res.message)
+        return window["$message"].info(res.message);
       }
 
-      if (data.id == 0) {
-        store.loadClass()
-        store.loadNoteList({}, false)
+      if (data.id == '') {
+        store.loadClass();
+        store.loadNoteList({}, false);
       } else {
-        store.updateNoteItem(data.id, res.data)
+        store.updateNoteItem(data.id, res.data);
       }
 
-      store.view.detail.md_content = editor.markdown
-      store.view.detail.content = editor.html
-      store.view.detail.id = res.data.id
+      store.view.detail.md_content = editor.markdown;
+      store.view.detail.content = editor.html;
+      store.view.detail.id = res.data.id;
 
       if (isCloseEditMode) {
-        store.setEditorMode('preview')
+        store.setEditorMode("preview");
       }
 
-      window['$message'].success('保存成功', {
+      window["$message"].success("保存成功", {
         duration: 1000,
-      })
+      });
     })
     .finally(() => {
-      loading.value = false
-    })
-}
+      loading.value = false;
+    });
+};
 
 // 防抖的保存事件
-const onSaveDebounce = debounce(isCloseEditMode => {
-  onSave(isCloseEditMode)
-}, 500)
+const onSaveDebounce = debounce((isCloseEditMode) => {
+  onSave(isCloseEditMode);
+}, 500);
 
 // 标题输入键盘事件
-const onTitle = e => {
+const onTitle = (e) => {
   if (e.keyCode == 13) {
-    e.preventDefault()
-    return
+    e.preventDefault();
+    return;
   }
 
-  editor.title = e.target.innerText
+  editor.title = e.target.innerText;
 
   if ((e.ctrlKey || e.metaKey) && e.keyCode === 83) {
-    e.preventDefault()
-    onSaveDebounce(false)
+    e.preventDefault();
+    onSaveDebounce(false);
   }
-}
+};
 
 // 收藏笔记
 const onCollection = () => {
-  let type = detail.value.is_asterisk == 1 ? 2 : 1
+  let type = detail.value.is_asterisk == 1 ? 2 : 1;
 
-  ServeSetAsteriskArticle({
-    article_id: detail.value.id,
+  ServeSetAsteriskNote({
+    note_id: detail.value.id,
     type: type,
-  }).then(res => {
-    if (res.code !== 200) return false
+  }).then((res) => {
+    if (res.code !== 200) return false;
 
-    store.setCollectionStatus(type == 1)
-  })
-}
+    store.setCollectionStatus(type == 1);
+  });
+};
 
 // 下载笔记
 const onDownload = () => {
-  let title = store.view.detail.title + '.md'
+  let title = store.view.detail.title + ".md";
   let blob = new Blob([store.view.detail.md_content], {
-    type: 'text/plain',
-  })
+    type: "text/plain",
+  });
 
-  let reader = new FileReader()
-  reader.readAsDataURL(blob)
+  let reader = new FileReader();
+  reader.readAsDataURL(blob);
   reader.onload = function (e) {
-    let a = document.createElement('a')
-    a.download = title
-    a.href = e.target.result
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-  }
-}
+    let a = document.createElement("a");
+    a.download = title;
+    a.href = e.target.result;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+};
 
 // 查看预览图片
 const onClickImage = (images, currentIndex) => {
-  console.log(images, currentIndex)
-}
+  console.log(images, currentIndex);
+};
 
 const onDelete = () => {
   window.$dialog.create({
     showIcon: false,
     title: `删除笔记？`,
-    content: '笔记删除后30天之内，可在回收站中进行恢复',
-    positiveText: '确定',
-    negativeText: '取消',
+    content: "笔记删除后30天之内，可在回收站中进行恢复",
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
-      ServeDeleteArticle({
-        article_id: detail.value.id,
-      }).then(res => {
-        if (res.code !== 200) return false
+      ServeDeleteNote({
+        note_id: detail.value.id,
+      }).then((res) => {
+        if (res.code !== 200) return false;
 
-        store.close()
-      })
+        store.close();
+      });
     },
-  })
-}
+  });
+};
 
 const onShare = () => {
-  window['$message'].info('开发中...')
-}
+  window["$message"].info("开发中...");
+};
 </script>
 
 <template>
@@ -232,7 +233,7 @@ const onShare = () => {
           v-if="store.view.editorMode == 'preview'"
           class="el-header sub-header text-ellipsis"
         >
-          <span>分类: {{ store.view.detail.class_name || '默认分类' }}</span>
+          <span>分类: {{ store.view.detail.class_name || "默认分类" }}</span>
           <span>最后更新于 {{ store.view.detail.updated_at }}</span>
         </header>
 
@@ -286,8 +287,8 @@ const onShare = () => {
         @click="onSave(true)"
       >
         <n-icon class="icon" size="18" :component="EditOne" />
-        <p v-if="detail.id == 0 && editor.markdown.length === 0">取消</p>
-        <p v-else>{{ loading ? '保存中..' : '保存' }}</p>
+        <p v-if="detail.id == '' && editor.markdown.length === 0">取消</p>
+        <p v-else>{{ loading ? "保存中..." : "保存" }}</p>
       </div>
 
       <div

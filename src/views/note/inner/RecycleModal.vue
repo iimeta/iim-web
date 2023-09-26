@@ -1,21 +1,21 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { NModal, NImage } from 'naive-ui'
-import { CalendarThirty, Undo, Delete, ToBottom } from '@icon-park/vue-next'
-import Loading from '@/components/base/Loading.vue'
+import { ref, reactive, onMounted } from "vue";
+import { NModal, NImage } from "naive-ui";
+import { CalendarThirty, Undo, Delete, ToBottom } from "@icon-park/vue-next";
+import Loading from "@/components/base/Loading.vue";
 import {
-  ServeGetArticleList,
-  ServeForeverDeleteArticle,
-  ServeRecoverArticle,
+  ServeGetNoteList,
+  ServeForeverDeleteNote,
+  ServeRecoverNote,
   ServeGetRecoverAnnexList,
   ServeDownloadAnnex as onDownload,
   ServeForeverDeleteAnnex,
-  ServeRecoverArticleAnnex,
-} from '@/api/article'
+  ServeRecoverNoteAnnex,
+} from "@/api/note";
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
-const isShow = ref(true)
+const isShow = ref(true);
 const state = reactive({
   note: {
     loading: false,
@@ -25,91 +25,91 @@ const state = reactive({
     loading: false,
     items: [],
   },
-})
+});
 
-const tabIndex = ref(1)
+const tabIndex = ref(1);
 
 const onMaskClick = () => {
-  emit('close')
-}
+  emit("close");
+};
 
-const triggerType = index => {
-  tabIndex.value = index
-}
+const triggerType = (index) => {
+  tabIndex.value = index;
+};
 
 // 加载笔记列表
 const loadNoteList = () => {
-  state.note.loading = true
-  ServeGetArticleList({
+  state.note.loading = true;
+  ServeGetNoteList({
     page: 1,
     find_type: 5,
   })
-    .then(res => {
-      state.note.items = res.data.items
+    .then((res) => {
+      state.note.items = res.data.items;
     })
     .finally(() => {
-      state.note.loading = false
-    })
-}
+      state.note.loading = false;
+    });
+};
 
 const loadAnnexList = () => {
-  state.annex.loading = true
+  state.annex.loading = true;
   ServeGetRecoverAnnexList()
-    .then(res => {
+    .then((res) => {
       if (res.code == 200) {
-        state.annex.items = res.data.items || []
+        state.annex.items = res.data.items || [];
       }
     })
     .finally(() => {
-      state.annex.loading = false
-    })
-}
+      state.annex.loading = false;
+    });
+};
 
 // 永久删除笔记
-const onDeleteArticle = (index, id) => {
-  ServeForeverDeleteArticle({
-    article_id: id,
-  }).then(res => {
+const onDeleteNote = (index, id) => {
+  ServeForeverDeleteNote({
+    note_id: id,
+  }).then((res) => {
     if (res.code == 200) {
-      state.note.items.splice(index, 1)
+      state.note.items.splice(index, 1);
     }
-  })
-}
+  });
+};
 
 // 恢复已删除笔记
-const onRecoverArticle = (index, id) => {
-  ServeRecoverArticle({
-    article_id: id,
-  }).then(res => {
+const onRecoverNote = (index, id) => {
+  ServeRecoverNote({
+    note_id: id,
+  }).then((res) => {
     if (res.code == 200) {
-      state.note.items.splice(index, 1)
+      state.note.items.splice(index, 1);
     }
-  })
-}
+  });
+};
 
 const onRecoverAnnex = (index, id) => {
-  ServeRecoverArticleAnnex({
+  ServeRecoverNoteAnnex({
     annex_id: data.id,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      state.annex.items.splice(index, 1)
+      state.annex.items.splice(index, 1);
     }
-  })
-}
+  });
+};
 const onDeleteAnnex = (index, id) => {
   ServeForeverDeleteAnnex({
     annex_id: id,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      state.annex.items.splice(index, 1)
+      state.annex.items.splice(index, 1);
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
-  loadNoteList()
-  loadAnnexList()
-})
+  loadNoteList();
+  loadAnnexList();
+});
 </script>
 
 <template>
@@ -166,7 +166,7 @@ onMounted(() => {
         </template>
         <template v-else>
           <div
-            class="article"
+            class="note"
             v-for="(note, index) in state.note.items"
             :key="note.id"
           >
@@ -182,14 +182,14 @@ onMounted(() => {
                     color="#03a9f4"
                     class="pointer"
                     :component="Undo"
-                    @click="onRecoverArticle(index, note.id)"
+                    @click="onRecoverNote(index, note.id)"
                   />
                   <n-icon
                     :size="18"
                     color="red"
                     class="pointer"
                     :component="Delete"
-                    @click="onDeleteArticle(index, note.id)"
+                    @click="onDeleteNote(index, note.id)"
                   />
                 </div>
               </div>
@@ -204,8 +204,8 @@ onMounted(() => {
                 <div class="abstract">
                   {{
                     note.abstract
-                      .replace(/[\r\n]/g, '')
-                      .replace(/(<([^>]+)>)/gi, '')
+                      .replace(/[\r\n]/g, "")
+                      .replace(/(<([^>]+)>)/gi, "")
                   }}
                 </div>
               </div>
@@ -247,7 +247,7 @@ onMounted(() => {
 
         <template v-else>
           <div
-            class="article"
+            class="note"
             v-for="(annex, index) in state.annex.items"
             :key="annex.id"
           >
@@ -343,7 +343,7 @@ onMounted(() => {
   }
 }
 
-.article {
+.note {
   min-height: 50px;
   padding: 8px;
   position: relative;

@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import {
-  ServeGetArticleDetail,
-  ServeGetArticleClass,
-  ServeGetArticleTag,
-  ServeGetArticleList,
-  ServeEditArticleClass,
-  ServeEditArticleTag,
-  ServeDeleteArticleClass,
-  ServeDeleteArticleTag,
-} from '@/api/article'
+  ServeGetNoteDetail,
+  ServeGetNoteClass,
+  ServeGetNoteTag,
+  ServeGetNoteList,
+  ServeEditNoteClass,
+  ServeEditNoteTag,
+  ServeDeleteNoteClass,
+  ServeDeleteNoteTag,
+} from '@/api/note'
 
 export const useNoteStore = defineStore('note', {
   state: () => {
@@ -27,8 +27,8 @@ export const useNoteStore = defineStore('note', {
         loadId: 0,
         loadStatus: 0,
         detail: {
-          id: 0,
-          class_id: 0,
+          id: '',
+          class_id: '',
           title: '',
           is_asterisk: 0,
           status: 1,
@@ -48,18 +48,18 @@ export const useNoteStore = defineStore('note', {
       this.view.loadId = 0
     },
 
-    addNewNote(class_id = 0) {
+    addNewNote(class_id = '') {
       this.view.detail = {
         class_id: class_id,
         content: '',
         created_at: '',
         files: [],
-        id: 0,
+        id: '',
         is_asterisk: 0,
         md_content: '',
         status: 1,
         tags: [],
-        title: '请编辑标题！！',
+        title: '无标题笔记',
       }
 
       this.view.loadId = 1
@@ -71,7 +71,7 @@ export const useNoteStore = defineStore('note', {
     },
 
     loadClass() {
-      ServeGetArticleClass().then(({ code, data }) => {
+      ServeGetNoteClass().then(({ code, data }) => {
         if (code != 200) return false
 
         this.class = data.items
@@ -79,7 +79,7 @@ export const useNoteStore = defineStore('note', {
     },
 
     loadTags() {
-      ServeGetArticleTag().then(({ code, data }) => {
+      ServeGetNoteTag().then(({ code, data }) => {
         if (code != 200) return false
 
         this.tags = data.tags
@@ -99,7 +99,7 @@ export const useNoteStore = defineStore('note', {
 
       this.notes.loadStatus = 0
       this.notes.items = []
-      ServeGetArticleList(this.notes.params).then(res => {
+      ServeGetNoteList(this.notes.params).then(res => {
 
         this.notes.items = res.data.items
 
@@ -120,8 +120,8 @@ export const useNoteStore = defineStore('note', {
 
       this.setEditorMode('preview')
 
-      ServeGetArticleDetail({
-        article_id: id,
+      ServeGetNoteDetail({
+        note_id: id,
       }).then(({ code, data }) => {
         if (code != 200 && data.id != this.view.loadId) {
           return
@@ -152,10 +152,10 @@ export const useNoteStore = defineStore('note', {
 
     // 编辑分类
     async editClass(class_id, class_name) {
-      const res = await ServeEditArticleClass({ class_id, class_name })
+      const res = await ServeEditNoteClass({ class_id, class_name })
 
       if (res && res.code === 200) {
-        if (class_id === 0) {
+        if (class_id === '') {
           this.class.unshift({ class_name, count: 0, id: res.data.id })
         } else {
           const item = this.class.find(item => item.id === class_id)
@@ -165,7 +165,7 @@ export const useNoteStore = defineStore('note', {
     },
 
     async deleteClass(class_id) {
-      const res = await ServeDeleteArticleClass({ class_id })
+      const res = await ServeDeleteNoteClass({ class_id })
 
       if (res && res.code == 200) {
         const index = this.class.findIndex(item => item.id === class_id)
@@ -180,7 +180,7 @@ export const useNoteStore = defineStore('note', {
 
     // 编辑标签
     async editTag(tag_id, tag_name) {
-      const res = await ServeEditArticleTag({ tag_id, tag_name })
+      const res = await ServeEditNoteTag({ tag_id, tag_name })
 
       if (res && res.code === 200) {
         if (tag_id === 0) {
@@ -193,7 +193,7 @@ export const useNoteStore = defineStore('note', {
     },
 
     async deleteTag(tag_id) {
-      const res = await ServeDeleteArticleTag({ tag_id })
+      const res = await ServeDeleteNoteTag({ tag_id })
 
       if (res && res.code == 200) {
         const index = this.tags.findIndex(item => item.id === tag_id)

@@ -1,54 +1,54 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { formatTime, parseTime } from '@/utils/datetime'
-import { fileFormatSize } from '@/utils/strings'
+import { ref, computed } from "vue";
+import { formatTime, parseTime } from "@/utils/datetime";
+import { fileFormatSize } from "@/utils/strings";
 import {
-  ServeUploadArticleAnnex,
+  ServeUploadNoteAnnex,
   ServeDownloadAnnex as onDownload,
-} from '@/api/article'
-import { useNoteStore } from '@/store/note'
-import { UploadOne } from '@icon-park/vue-next'
+} from "@/api/note";
+import { useNoteStore } from "@/store/note";
+import { UploadOne } from "@icon-park/vue-next";
 
-const store = useNoteStore()
+const store = useNoteStore();
 
-const detail = computed(() => store.view.detail)
+const detail = computed(() => store.view.detail);
 
-const loading = ref(false)
+const loading = ref(false);
 
 function onTriggerUpload() {
-  document.getElementById('upload-annex').click()
+  document.getElementById("upload-annex").click();
 }
 
 async function onUpload(e) {
   if (e.target.files.length == 0) {
-    return false
+    return false;
   }
 
-  let file = e.target.files[0]
+  let file = e.target.files[0];
   if (file.size / (1024 * 1024) > 5) {
-    window['$message'].info('笔记附件不能大于5M')
-    return false
+    window["$message"].info("笔记附件不能大于5M");
+    return false;
   }
 
-  let from = new FormData()
-  from.append('annex', file)
-  from.append('article_id', detail.value.id)
+  let from = new FormData();
+  from.append("annex", file);
+  from.append("note_id", detail.value.id);
 
-  loading.value = true
+  loading.value = true;
 
-  let res = await ServeUploadArticleAnnex(from).finally(
+  let res = await ServeUploadNoteAnnex(from).finally(
     () => (loading.value = false)
-  )
+  );
 
   if (res && res.code == 200) {
-    let { data } = res
+    let { data } = res;
     store.view.detail.files.push({
       id: data.id,
       original_name: data.original_name,
       created_at: parseTime(new Date()),
       size: data.size,
       suffix: data.suffix,
-    })
+    });
   }
 }
 </script>

@@ -13,7 +13,7 @@ import { isElectronMode } from "@/utils/common";
   <div class="copyright">
     <span>Copyright © 2023 IIM. All Rights Reserved.</span>
     <br />
-    <span>v1.0.1</span>
+    <span>v1.0.0</span>
   </div>
 
   <div class="fly-box">

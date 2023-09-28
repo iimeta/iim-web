@@ -45,10 +45,10 @@ export const ChatMsgTypeMapping = {
   [ChatMsgSysGroupMemberKicked]: '[踢出群消息]',
   [ChatMsgSysGroupMessageRevoke]: '[撤回消息]',
   [ChatMsgSysGroupDismissed]: '[群解散消息]',
-  [ChatMsgSysGroupMuted]: '[群禁言消息]',
-  [ChatMsgSysGroupCancelMuted]: '[群解除禁言消息]',
+  [ChatMsgSysGroupMuted]: '[开启全员禁言消息]',
+  [ChatMsgSysGroupCancelMuted]: '[关闭全员禁言消息]',
   [ChatMsgSysGroupMemberMuted]: '[群成员禁言消息]',
-  [ChatMsgSysGroupMemberCancelMuted]: '[群成员解除禁言消息]',
+  [ChatMsgSysGroupMemberCancelMuted]: '[解除群成员禁言消息]',
   [ChatMsgSysGroupNotice]: '[群公告]',
 }
 

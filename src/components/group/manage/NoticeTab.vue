@@ -17,7 +17,7 @@ const batchDelete = ref(false)
 const items = ref([])
 const editor = reactive({
   isShow: false,
-  id: 0,
+  id: '',
   gid: 0,
   title: '',
   content: '',
@@ -67,7 +67,7 @@ const onRowClick = item => {
 }
 
 const onAdd = () => {
-  editor.id = 0
+  editor.id = ''
   editor.gid = props.id
   editor.title = ''
   editor.content = ''

@@ -183,7 +183,7 @@ export const useNoteStore = defineStore('note', {
       const res = await ServeEditNoteTag({ tag_id, tag_name })
 
       if (res && res.code === 200) {
-        if (tag_id === 0) {
+        if (tag_id == '') {
           this.tags.unshift({ tag_name, count: 0, id: res.data.id })
         } else {
           const item = this.tags.find(item => item.id === tag_id)

@@ -16,7 +16,7 @@ defineProps({
         {{ extra.owner_name }}
       </a>
 
-      <span>取消了全员禁言</span>
+      <span>全员禁言已关闭</span>
     </div>
   </div>
 </template>

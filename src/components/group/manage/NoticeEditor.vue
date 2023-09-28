@@ -6,8 +6,8 @@ import { ServeEditGroupNotice } from "@/api/group";
 const emit = defineEmits(["close", "success"]);
 const props = defineProps({
   id: {
-    type: Number,
-    default: 0,
+    type: String,
+    default: "",
   },
   gid: {
     type: Number,
@@ -23,7 +23,7 @@ const props = defineProps({
   },
 });
 
-const titleModal = ref(props.id == 0 ? "发布群公告" : "编辑群公告");
+const titleModal = ref(props.id == "" ? "发布群公告" : "编辑群公告");
 
 const formRef = ref();
 const model = reactive({
@@ -65,7 +65,11 @@ const onSubmit = () => {
 
   response.then((res) => {
     if (res.code == 200) {
-      window["$message"].success(res.message);
+      if (props.id == "") {
+        window["$message"].success("发布群公告成功");
+      } else {
+        window["$message"].success("更新群公告成功");
+      }
       emit("success");
     } else {
       window["$message"].warning(res.message);

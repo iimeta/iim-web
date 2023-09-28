@@ -16,7 +16,7 @@ defineProps({
         {{ extra.owner_name }}
       </a>
 
-      <span>解除了</span>
+      <span>解除</span>
 
       <template v-for="(user, index) in extra.members">
         <a @click="showUserModal(user.user_id)">{{ user.nickname }}</a>

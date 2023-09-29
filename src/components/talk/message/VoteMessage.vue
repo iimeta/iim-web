@@ -50,7 +50,7 @@ function updateStatistics(data) {
     option.num = data.options[option.key]
 
     if (count > 0) {
-      option.progress = (data.options[option.key] / count) * 100
+      option.progress = Math.round((data.options[option.key] / count) * 100)
     }
   })
 }

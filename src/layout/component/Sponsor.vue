@@ -7,9 +7,9 @@ let isShow = ref(false)
 
 let num = storage.get('reward', 0)
 
-// setTimeout(() => {
-//   isShow.value = num <= 2
-// }, 1000 * 60 * 2)
+setTimeout(() => {
+  isShow.value = num <= 2
+}, 1000 * 60* 10)
 
 const onClose = () => {
   isShow.value = false
@@ -21,26 +21,26 @@ const onClose = () => {
   <div>
     <div class="reward" v-show="isShow">
       <div class="title">
-        <span>开源支持</span>
+        <span><b>开源支持</b></span>
         <n-icon :size="18" :component="Close" @click="onClose" />
       </div>
 
       <div class="main">
         <div class="pay-box">
           <img
-            src="https://im.gzydong.com/public/media/image/talk/20230226/dfc440a2bdb2ae852d57a2003b3b350b_737x742.png"
+            src="https://image.iim.ai/public/images/Alipay.png"
           />
-          <p>支付宝</p>
+          <p><b>支付宝</b></p>
         </div>
         <div class="pay-box">
           <img
-            src="https://im.gzydong.com/public/media/image/talk/20230226/6493e01b44b6e5cb6a219cea863eb13e_621x620.png"
+            src="https://image.iim.ai/public/images/WeChatPay.png"
           />
-          <p>微信</p>
+          <p><b>微信支付</b></p>
         </div>
       </div>
       <div class="footer">
-        开源不易，如果你觉得项目对你有帮助，可以请作者喝杯咖啡☕️！鼓励下...
+        <b>如果这个项目帮助到了你，可以请作者喝杯咖啡表示感谢 ☕</b>
       </div>
     </div>
   </div>
@@ -65,7 +65,7 @@ const onClose = () => {
     line-height: 50px;
     padding-left: 20px;
     width: 100%;
-    font-size: 16px;
+    font-size: 18px;
     position: relative;
     box-sizing: border-box;
 
@@ -86,9 +86,9 @@ const onClose = () => {
     overflow: hidden;
 
     .pay-box {
-      width: 200px;
-      height: 240px;
-      background: #1977ff;
+      width: 218px;
+      height: 268px;
+      background: #007AFC;
       margin: 0 10px;
       display: flex;
       flex-direction: column;
@@ -97,17 +97,18 @@ const onClose = () => {
       border-radius: 5px;
 
       img {
-        width: 150px;
-        height: 150px;
+        width: 188px;
+        height: 188px;
       }
 
       p {
-        margin-top: 20px;
+        margin-top: 18px;
         color: #ffffff;
+        font-size: 18px;
       }
 
       &:last-child {
-        background: #22ab38;
+        background: #05C160;
       }
     }
   }
@@ -116,7 +117,7 @@ const onClose = () => {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    font-size: 13px;
+    font-size: 16px;
   }
 }
 </style>

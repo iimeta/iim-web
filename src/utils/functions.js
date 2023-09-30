@@ -31,13 +31,20 @@ export function getImageInfo(imgsrc) {
  * @param {Number} cr_id
  */
 export function download(cr_id) {
+
   let token = getAccessToken()
+
+  let baseURL = import.meta.env.VITE_BASE_API
+
+  if (baseURL == "") {
+    const url = new URL(window.location.href);
+    baseURL = `${url.protocol}//${url.hostname}:${url.port || (url.protocol == 'https:' ? 443 : 80)}`;
+  }
+
   try {
     let link = document.createElement('a')
     // link.target = '_blank'
-    link.href = `${
-      import.meta.env.VITE_BASE_API
-    }/api/v1/talk/records/file/download?cr_id=${cr_id}&token=${token}`
+    link.href = `${baseURL}/api/v1/talk/records/file/download?cr_id=${cr_id}&token=${token}`
     link.click()
   } catch (e) {}
 }

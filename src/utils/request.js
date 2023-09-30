@@ -1,10 +1,25 @@
 import axios from 'axios'
 import { delAccessToken, getAccessToken } from '@/utils/auth'
 
+const getBaseURL = () => {
+
+  let baseURL = import.meta.env.VITE_BASE_API
+
+  if (baseURL == "") {
+    const url = new URL(window.location.href);
+    baseURL = `${url.protocol}//${url.hostname}:${url.port || (url.protocol == 'https:' ? 443 : 80)}`;
+  }
+
+  console.log(baseURL)
+
+  return baseURL
+}
+
+
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: import.meta.env.VITE_BASE_API,
+  baseURL: getBaseURL(),
 
   // 请求超时时间
   timeout: 60000,

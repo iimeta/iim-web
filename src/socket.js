@@ -11,12 +11,33 @@ import EventRevoke from './event/socket/revoke'
 import { NAvatar } from 'naive-ui'
 import { notifyIcon } from '@/constant/default'
 
+const getBaseURL = () => {
+
+  let baseURL = import.meta.env.VITE_SOCKET_API
+
+  if (baseURL == "") {
+    
+    const url = new URL(window.location.href);
+
+    let protocol = 'ws:'
+    if (url.protocol == 'https:') {
+      protocol = 'wss:'
+    }
+
+    baseURL = `${protocol}//${url.hostname}:${url.port || (url.protocol == 'https:' ? 443 : 80)}`;
+  }
+
+  console.log(baseURL)
+
+  return baseURL
+}
+
 const urlCallback = () => {
   if (!isLoggedIn()) {
     window.location.reload()
   }
 
-  const url = `${import.meta.env.VITE_SOCKET_API}/wss/default.io`
+  const url = `${getBaseURL()}/wss/default.io`
 
   return `${url}?token=${getAccessToken()}`
 }

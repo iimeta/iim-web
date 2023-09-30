@@ -80,7 +80,7 @@ onLoadData()
 
         <div class="describe">
           <n-avatar round :size="15" :src="item.avatar" />
-          <span class="nickname text-ellipsis">{{ item.nickname }}</span>
+          <span class="nickname text-ellipsis ml10">{{ item.nickname }}</span>
           <span class="datetime">发表于 {{ item.created_at }}</span>
           <span class="btn" @click="item.isShow = !item.isShow">
             <n-icon :size="18" :component="item.isShow ? Up : Down" />

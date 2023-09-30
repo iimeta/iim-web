@@ -126,11 +126,18 @@ export const ServeGetRecoverAnnexList = () => {
 
 // 下载笔记附件服务接口
 export const ServeDownloadAnnex = annex_id => {
-  let api = import.meta.env.VITE_BASE_API
+
+  let baseURL = import.meta.env.VITE_BASE_API
+
+  if (baseURL == "") {
+    const url = new URL(window.location.href);
+    baseURL = `${url.protocol}//${url.hostname}:${url.port || (url.protocol == 'https:' ? 443 : 80)}`;
+  }
+
   try {
     let link = document.createElement('a')
     // link.target = '_blank'
-    link.href = `${api}/api/v1/note/annex/download?annex_id=${annex_id}&token=${getAccessToken()}`
+    link.href = `${baseURL}/api/v1/note/annex/download?annex_id=${annex_id}&token=${getAccessToken()}`
     link.click()
   } catch (e) {
     console.error(e)

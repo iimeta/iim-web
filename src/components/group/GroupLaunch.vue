@@ -188,7 +188,7 @@ onLoad()
                     <span class="text-ellipsis">{{ item.nickname }}</span>
                   </div>
 
-                  <div class="checkbox">
+                  <div class="checkbox" @click="onTriggerContact(item)">
                     <n-checkbox
                       size="small"
                       :checked="item.checked"
@@ -271,7 +271,7 @@ onLoad()
           @click="onSubmit"
           :disabled="isCanSubmit"
         >
-          提交
+          确定
         </n-button>
       </div>
     </template>

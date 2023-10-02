@@ -1,5 +1,6 @@
 <script setup>
 import { isElectronMode } from "@/utils/common";
+import config from "../../../package.json";
 </script>
 
 <template>
@@ -13,7 +14,7 @@ import { isElectronMode } from "@/utils/common";
   <div class="copyright">
     <span>Copyright © 2023 IIM. All Rights Reserved.</span>
     <br />
-    <span>v1.0.0</span>
+    <span>v{{config.version}}</span>
   </div>
 
   <div class="fly-box">

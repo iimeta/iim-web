@@ -38,7 +38,7 @@ if (pids == '' || pids == undefined) {
     </div>
 
     <div class="tips">
-      <span>转发：聊天会话记录 ({{ extra.msg_ids.length }}条)</span>
+      <span>转发：聊天会话记录 ({{ extra.records_ids.length }}条)</span>
     </div>
 
     <ForwardRecord

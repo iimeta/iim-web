@@ -17,7 +17,7 @@ export interface FileExtra {
 }
 
 export interface ForwardExtra {
-    msg_ids: number[];
+    records_ids: number[];
     receiver_id: number;
     records: {
         nickname: string;

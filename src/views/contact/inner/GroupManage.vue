@@ -8,7 +8,7 @@ import { ServeContactGroupSave, ServeContactGroupList } from '@/api/contact'
 const emit = defineEmits(['close', 'relaod'])
 
 interface Item {
-  id: number
+  id: string
   index: number
   name: string
   count: number
@@ -40,7 +40,7 @@ const onLoadData = async () => {
   }
 
   if (!options.length) {
-    options.push({ id: 0, name: '', index: index++, count: 0 })
+    options.push({ id: '', name: '', index: index++, count: 0 })
   }
 }
 
@@ -59,7 +59,7 @@ const onSubmit = () => {
 }
 
 const addOption = () => {
-  options.push({ name: '', id: 0, index: index++, count: 0 })
+  options.push({ name: '', id: '', index: index++, count: 0 })
 }
 
 const delOption = (item: Item) => {

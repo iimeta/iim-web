@@ -17,7 +17,7 @@ class WsSocket {
     heartbeat: {
       setInterval: null,
       pingInterval: 20000,
-      pingTimeout: 60000,
+      pingTimeout: 180000,
     },
     reconnect: {
       lockReconnect: false,

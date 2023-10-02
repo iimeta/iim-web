@@ -480,7 +480,7 @@ onMounted(onReload);
 
             <!-- 主体信息 -->
             <main class="main-column">
-              <div class="talk-title">
+              <div class="talk-title" :class="{ pointer: dialogueStore.isOpenMultiSelect }" @click="onRowClick(item)">
                 <span
                   class="nickname pointer"
                   v-show="talk_type == 2 && item.float == 'left'"
@@ -656,7 +656,6 @@ onMounted(onReload);
         display: flex;
         align-items: center;
         height: 24px;
-        margin-bottom: 2px;
         font-size: 12px;
         user-select: none;
         color: #a7a0a0;

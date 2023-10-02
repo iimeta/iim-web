@@ -330,7 +330,7 @@ onLoadData()
         v-for="member in filterSearch"
         :key="member.user_id"
       >
-        <div class="tool flex-center" v-show="batchDelete">
+        <div class="tool flex-center" v-show="batchDelete" @click="onRowClick(member)">
           <n-checkbox
             :disabled="member.leader === 2"
             size="small"
@@ -366,7 +366,7 @@ onLoadData()
             </p>
           </div>
           <div class="item-text text-ellipsis">
-            {{ member.motto || '暂无简介' }}
+            {{ member.motto }}
           </div>
         </div>
       </div>

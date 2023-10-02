@@ -1,7 +1,7 @@
 <script setup>
-import { useUserStore } from '@/store/user'
-import { Male, Female } from '@icon-park/vue-next'
-const store = useUserStore()
+import { useUserStore } from "@/store/user";
+import { Male, Female } from "@icon-park/vue-next";
+const store = useUserStore();
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const store = useUserStore()
       <n-avatar round class="avatar" :size="100" :src="store.avatar" />
 
       <div class="nickname text-ellipsis">
-        {{ store.nickname || '未设置昵称' }}
+        {{ store.nickname || "未设置昵称" }}
       </div>
 
       <div class="gender" v-show="store.gender > 0">
@@ -23,8 +23,26 @@ const store = useUserStore()
       <div class="usersign pointer">
         <span style="font-weight: 600">个性签名：</span>
         <span>
-          {{ store.motto || ' 编辑个签，展示我的独特态度。' }}
+          {{ store.motto || " 编辑个签，展示我的独特态度。" }}
         </span>
+      </div>
+      <div class="infos">
+        <div class="info-item">
+          <span class="name">&#12288;ID :</span>
+          <span class="text">{{ store.uid || "-" }}</span>
+        </div>
+        <div class="info-item">
+          <span class="name">邮箱 :</span>
+          <span class="text">{{ store.email || "-" }}</span>
+        </div>
+        <div class="info-item">
+          <span class="name">手机 :</span>
+          <span class="text">{{ store.mobile || "-" }}</span>
+        </div>
+        <div class="info-item">
+          <span class="name">生日 :</span>
+          <span class="text">{{ store.birthday || "-" }}</span>
+        </div>
       </div>
     </div>
   </section>
@@ -80,23 +98,60 @@ const store = useUserStore()
   .usersign {
     min-height: 26px;
     border-radius: 5px;
-    padding: 8px;
+    padding: 5px 8px;
     line-height: 25px;
     background: #f3f5f7;
     color: var(--im-text-color);
     font-size: 12px;
-    margin-bottom: 3px;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     position: relative;
   }
 }
 
-html[data-theme='dark'] {
+.infos {
+  .info-item {
+    height: 30px;
+    width: 100%;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+
+    .name {
+      width: 45px;
+      flex-shrink: 0;
+      color: #625f5f;
+    }
+
+    .text {
+      flex: 1 auto;
+      margin-left: 5px;
+    }
+
+    .edit {
+      text-decoration: underline;
+      text-decoration-style: solid;
+      text-underline-offset: 3px;
+    }
+  }
+}
+
+html[data-theme="dark"] {
   .account-card .card-header {
     background: #2c2c32;
   }
 
   .account-card .card-main .usersign {
     background-color: #2c2c32;
+  }
+  .infos {
+    .info-item {
+      .name {
+        color: #afabab;
+      }
+    }
   }
 }
 </style>

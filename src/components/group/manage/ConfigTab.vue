@@ -110,7 +110,7 @@ onLoadData()
             确定要解散群聊吗？ 此操作是不可逆的！
           </n-popconfirm>
         </n-form-item>
-        <n-form-item label="公开可见:" feedback="开启后可在公开群聊列表展示">
+        <n-form-item label="公开可见:" feedback="开启后将显示在公开群聊列表中">
           <n-switch
             :rubber-band="false"
             :value="detail.is_overt"

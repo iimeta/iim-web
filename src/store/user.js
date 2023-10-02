@@ -13,6 +13,7 @@ export const useUserStore = defineStore('user', {
       nickname: '', // 用户昵称
       email: '', // 邮箱
       mobile: '', // 手机号
+      birthday: '', // 生日
       gender: 0, // 性别
       motto: '', // 个性签名
       avatar: '',
@@ -45,6 +46,7 @@ export const useUserStore = defineStore('user', {
           this.uid = data.user_info.uid
           this.mobile = data.user_info.mobile || ''
           this.email = data.user_info.email || ''
+          this.birthday = data.user_info.birthday || ''
           this.avatar = data.user_info.avatar
           this.gender = data.user_info.gender
           this.motto = data.user_info.motto

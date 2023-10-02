@@ -22,7 +22,7 @@ const request = axios.create({
   baseURL: getBaseURL(),
 
   // 请求超时时间
-  timeout: 60000,
+  timeout: 180000,
 })
 
 let once = false

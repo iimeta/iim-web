@@ -12,7 +12,7 @@
     "electron:dev": "concurrently -k \"npm run dev\" \"npm run electron\"",
     "electron:build": "vite build --mode electron && electron-builder --mac && electron-builder --win --x64",
     "electron:build-mac": "vite build --mode electron && electron-builder --mac",
-	"electron:build-win": "vite build --mode electron && electron-builder --win --x64"
+	  "electron:build-win": "vite build --mode electron && electron-builder --win --x64"
   },
   "dependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",

@@ -264,6 +264,10 @@ const onAfterEnter = () => {
               <span class="name">手机 :</span>
               <span class="text">{{ state.mobile || "-" }}</span>
             </div>
+            <div class="info-item">
+              <span class="name">生日 :</span>
+              <span class="text">{{ state.birthday || "-" }}</span>
+            </div>
             <div class="info-item" v-if="state.friend_status == 2">
               <span class="name">分组 :</span>
               <n-dropdown
@@ -390,7 +394,7 @@ const onAfterEnter = () => {
   }
 
   .main {
-    padding: 20px 30px;
+    padding: 10px 20px;
 
     .motto {
       min-height: 26px;

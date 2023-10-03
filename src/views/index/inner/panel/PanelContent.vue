@@ -385,13 +385,13 @@ const onReload = () => {
 };
 
 const onRowClick = (item: IMessageRecord) => {
-  if (dialogueStore.isOpenMultiSelect) {
-    if (ForwardableMessageType.includes(item.msg_type)) {
+  // if (dialogueStore.isOpenMultiSelect) {
+  //   if (ForwardableMessageType.includes(item.msg_type)) {
       item.isCheck = !item.isCheck;
-    } else {
-      window["$message"].info("此类消息不支持转发");
-    }
-  }
+  //   } else {
+  //     window["$message"].info("此类消息不支持转发");
+  //   }
+  // }
 };
 
 watch(props, onReload);

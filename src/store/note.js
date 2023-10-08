@@ -18,7 +18,7 @@ export const useNoteStore = defineStore('note', {
 
       notes: {
         loadStatus: 0,
-        params: { page: 1, keyword: '', find_type: 1, cid: 0 },
+        params: { page: 1, keyword: '', find_type: 1, cid: '' },
         items: [],
       },
 
@@ -90,7 +90,7 @@ export const useNoteStore = defineStore('note', {
       if (isReset) {
         Object.assign(
           this.notes.params,
-          { page: 1, keyword: '', find_type: 1, cid: 0 },
+          { page: 1, keyword: '', find_type: 1, cid: '' },
           params
         )
       } else {

@@ -225,7 +225,7 @@ const onShare = () => {
           <h4
             :contenteditable="editorMode"
             v-text="editor.title"
-            @keydown="onTitle"
+            @input="onTitle"
           />
         </header>
 

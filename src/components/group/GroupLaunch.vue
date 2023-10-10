@@ -68,7 +68,7 @@ const onLoad = () => {
   })
     .then(res => {
       if (res.code == 200 && res.data) {
-        let list = res.data || []
+        let list = res.data.items || []
 
         items.value = list.map(item => {
           return Object.assign(item, {

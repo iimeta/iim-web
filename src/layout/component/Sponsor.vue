@@ -1,46 +1,80 @@
 <script setup>
-import { ref } from 'vue'
-import { Close } from '@icon-park/vue-next'
-import { storage } from '@/utils/storage'
+import { ref } from "vue";
+import { Close } from "@icon-park/vue-next";
+import { storage } from "@/utils/storage";
 
-let isShow = ref(false)
+let isShowReward = ref(false);
+let isShowGroup = ref(false);
 
-let num = storage.get('reward', 0)
+// let rewardNum = storage.get('reward', 0)
+// let groupNum = storage.get('group', 0)
 
 setTimeout(() => {
-  isShow.value = num <= 2
-}, 1000 * 60* 10)
+  isShowReward.value = true;
+}, 1000 * 60 * 8);
 
-const onClose = () => {
-  isShow.value = false
-  storage.set('reward', num + 1)
-}
+setTimeout(() => {
+  isShowGroup.value = true;
+}, 1000 * 60 * 18);
+
+const onCloseReward = () => {
+  isShowReward.value = false;
+  // storage.set('reward', rewardNum + 1)
+};
+
+const onCloseGroup = () => {
+  isShowGroup.value = false;
+  // storage.set('group', groupNum + 1)
+};
 </script>
 
 <template>
   <div>
-    <div class="reward" v-show="isShow">
+    <div class="reward" v-show="isShowReward">
       <div class="title">
         <span><b>开源支持</b></span>
-        <n-icon :size="18" :component="Close" @click="onClose" />
+        <n-icon :size="18" :component="Close" @click="onCloseReward" />
       </div>
 
       <div class="main">
         <div class="pay-box">
-          <img
-            src="https://image.iim.ai/public/images/Alipay.png"
-          />
+          <img src="https://image.iim.ai/public/images/Alipay.png" />
           <p><b>支付宝</b></p>
         </div>
         <div class="pay-box">
-          <img
-            src="https://image.iim.ai/public/images/WeChatPay.png"
-          />
+          <img src="https://image.iim.ai/public/images/WeChatPay.png" />
           <p><b>微信支付</b></p>
         </div>
       </div>
       <div class="footer">
         <b>如果这个项目帮助到了你，可以请作者喝杯咖啡表示感谢 ☕</b>
+      </div>
+    </div>
+    <div class="reward" v-show="isShowGroup">
+      <div class="title">
+        <span><b>交流群</b></span>
+        <n-icon :size="18" :component="Close" @click="onCloseGroup" />
+      </div>
+
+      <div class="main">
+        <div class="group-box">
+          <img src="https://image.iim.ai/public/images/QQGroup.png" />
+          <p>
+            <a
+              href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=dp8EgZvsbxYX2-AL2-gXcGcrQVdZ8H42&authKey=c37n2VXO0kedTPoF2DZrH2bAYQTp0w0qgjGJ3NzNYbfLoCIz9WGDX8kMvnf%2Fzy1E&noverify=0&group_code=676713188"
+              target="_blank"
+            >
+              <b>QQ群</b>
+            </a>
+          </p>
+        </div>
+        <div class="group-box">
+          <img src="https://image.iim.ai/public/images/WeChatGroup.png" />
+          <p><b>微信群</b></p>
+        </div>
+      </div>
+      <div class="footer">
+        <b>欢迎加入交流群</b>
       </div>
     </div>
   </div>
@@ -88,7 +122,7 @@ const onClose = () => {
     .pay-box {
       width: 218px;
       height: 268px;
-      background: #007AFC;
+      background: #007afc;
       margin: 0 10px;
       display: flex;
       flex-direction: column;
@@ -108,7 +142,33 @@ const onClose = () => {
       }
 
       &:last-child {
-        background: #05C160;
+        background: #05c160;
+      }
+    }
+    .group-box {
+      width: 218px;
+      height: 268px;
+      background: #fff;
+      margin: 0 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+
+      a {
+        color: #2f81f7;
+      }
+
+      img {
+        width: 188px;
+        height: 188px;
+      }
+
+      p {
+        margin-top: 18px;
+        color: #05c160;
+        font-size: 18px;
       }
     }
   }

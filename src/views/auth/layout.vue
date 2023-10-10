@@ -1,6 +1,7 @@
 <script setup>
 import { isElectronMode } from "@/utils/common";
 import config from "../../../package.json";
+import { GithubOne } from "@icon-park/vue-next";
 </script>
 
 <template>
@@ -12,9 +13,9 @@ import config from "../../../package.json";
   </section>
 
   <div class="copyright">
-    <span>Copyright © 2023 IIM. All Rights Reserved.</span>
+    <span><b>Copyright © 2023 IIM. All Rights Reserved.</b></span>
     <br />
-    <span>v{{config.version}}</span>
+    <a href="https://github.com/iimeta/iim-client" target="_blank"><span><b>v{{ config.version }}</b></span></a>
   </div>
 
   <div class="fly-box">

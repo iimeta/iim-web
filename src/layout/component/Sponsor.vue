@@ -11,10 +11,12 @@ let isShowGroup = ref(false);
 
 setTimeout(() => {
   isShowReward.value = true;
+  // isShowReward.value = isShowReward <= 8;
 }, 1000 * 60 * 8);
 
 setTimeout(() => {
   isShowGroup.value = true;
+  // isShowGroup.value = isShowGroup <= 8;
 }, 1000 * 60 * 18);
 
 const onCloseReward = () => {

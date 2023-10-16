@@ -117,7 +117,7 @@ const editorOption = {
         }
 
         let list = [
-          { id: 0, nickname: '所有人', avatar: defAvatar, value: '所有人' },
+          { id: 1, nickname: '所有人', avatar: defAvatar, value: '所有人' },
           ...props.members,
         ]
 

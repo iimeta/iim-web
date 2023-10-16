@@ -39,7 +39,7 @@ const filterSearch = computed(() => {
   return items.value.filter((item: any) => {
     return (
       item.nickname.match(keywords.value) != null ||
-      item.remark.match(keywords.value) != null
+      item.user_card.match(keywords.value) != null
     )
   })
 })

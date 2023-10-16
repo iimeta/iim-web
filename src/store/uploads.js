@@ -119,6 +119,16 @@ export const useUploadsStore = defineStore('uploads', {
         receiver_id: item.receiver_id,
         talk_type: item.talk_type,
       })
+      .then(({ code, message }) => {
+        if (code == 200) {
+          this.isShow = false
+        } else {
+          window["$message"].warning(message);
+        }
+      })
+      .catch(() => {
+        window["$message"].warning("网络繁忙, 请稍后重试");
+      });
     },
   },
 })

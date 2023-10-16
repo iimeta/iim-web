@@ -41,7 +41,7 @@ const state = reactive({
     visit_card: '',
   },
   members: [],
-  remark: '',
+  user_card: '',
 })
 
 const search = computed(() => {
@@ -49,7 +49,7 @@ const search = computed(() => {
     return state.members.filter((item: any) => {
       return (
         item.nickname.match(state.keywords) != null ||
-        item.remark.match(state.keywords) != null
+        item.user_card.match(state.keywords) != null
       )
     })
   }
@@ -88,7 +88,7 @@ function loadDetail() {
       state.detail.name = result.group_name
       state.detail.profile = result.profile
       state.detail.visit_card = result.visit_card
-      state.remark = result.visit_card
+      state.user_card = result.visit_card
 
       if (result.notice) {
         state.detail.group_notice = result.notice
@@ -130,11 +130,11 @@ const onSignOut = () => {
 const onChangeRemark = () => {
   ServeUpdateGroupCard({
     group_id: props.gid,
-    visit_card: state.remark,
+    visit_card: state.user_card,
   }).then(({ code, message }) => {
     if (code == 200) {
       editCardPopover.value.setShow(false)
-      state.detail.visit_card = state.remark
+      state.detail.visit_card = state.user_card
       window['$message'].success('已更新群名片')
 
       loadMembers()
@@ -187,7 +187,7 @@ loadMembers()
                     placeholder="设置我的群名片"
                     :autofocus="true"
                     maxlength="10"
-                    v-model:value="state.remark"
+                    v-model:value="state.user_card"
                     @keydown.enter.native="onChangeRemark"
                   />
                   <n-button
@@ -280,7 +280,7 @@ loadMembers()
               >
             </div>
             <div class="card text-ellipsis grey">
-              {{ item.remark || '-' }}
+              {{ item.user_card || '-' }}
             </div>
           </div>
 

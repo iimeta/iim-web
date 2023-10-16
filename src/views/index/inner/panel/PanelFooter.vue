@@ -104,7 +104,7 @@ const onSendImageEvent = ({ data, callBack }) => {
   onSendMessage({ type: "image", ...data }, callBack);
 };
 
-// 发送图片消息
+// 发送视频消息
 const onSendVideoEvent = async ({ data }) => {
   let resp = await getVideoImage(data);
 
@@ -138,9 +138,9 @@ const onSendCodeEvent = ({ data, callBack }) => {
 
 // 发送文件消息
 const onSendFileEvent = ({ data }) => {
-  let maxsize = 200 * 1024 * 1024;
+  let maxsize = 2 * 1024 * 1024 * 1024;
   if (data.size > maxsize) {
-    return window["$message"].warning("上传文件不能超过100M");
+    return window["$message"].warning("上传文件不能超过2G");
   }
 
   uploadsStore.initUploadFile(
@@ -177,6 +177,7 @@ const onSendEmoticonEvent = ({ data, callBack }) => {
   onSendMessage({ type: "emoticon", emoticon_id: data }, callBack);
 };
 
+// 发送图文消息
 const onSendMixedEvent = ({ data, callBack }) => {
   let message = {
     type: "mixed",

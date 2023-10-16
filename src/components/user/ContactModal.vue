@@ -103,7 +103,7 @@ const onMaskClick = () => {
 }
 
 const onTriggerContact = (item: any) => {
-  let data = items.value.find((val: any) => val.id === item.id)
+  let data = items.value.find((val: any) => val.id === item.id && val.type === item.type)
 
   if (data) {
     data.checked = !data.checked
@@ -135,7 +135,7 @@ onLoad()
   <n-modal
     v-model:show="isShowBox"
     preset="card"
-    title="选择好友"
+    title="选择好友 / 群聊"
     class="modal-radius"
     style="max-width: 650px; height: 550px"
     :on-after-leave="onMaskClick"

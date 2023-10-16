@@ -211,6 +211,8 @@ export const useDialogueStore = defineStore('dialogue', {
       ServePublishMessage(data).then(res => {
         if (res.code == 200) {
           this.closeMultiSelect()
+        } else {
+          window["$message"].warning(res.message);
         }
       })
     },

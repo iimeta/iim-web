@@ -37,7 +37,7 @@ const urlCallback = () => {
     window.location.reload()
   }
 
-  const url = `${getBaseURL()}/wss/default.io`
+  const url = `${getBaseURL()}/api/ws/message`
 
   return `${url}?token=${getAccessToken()}`
 }

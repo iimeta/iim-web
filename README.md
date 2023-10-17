@@ -2,7 +2,7 @@
 
 智元 IM 是一个网页版即时聊天系统, 同时拥有AI聊天对话功能, 本项目基于[Lumen IM](https://github.com/gzydong/LumenIM)开发
 
-
+[![Release](https://img.shields.io/static/v1?label=release&message=v1.0.0&color=blue)](https://github.com/iimeta/iim-web/releases)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)](https://github.com/iimeta/iim-client)
 
 ## 功能介绍
@@ -33,6 +33,7 @@ npm install
 
 # 启动本地开发环境
 npm run dev
+
 # 启动本地开发环境桌面客户端
 npm run electron:dev
 

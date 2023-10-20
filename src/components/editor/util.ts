@@ -3,6 +3,7 @@ import { Delta } from 'quill'
 interface Item {
     type: number
     content: string
+    text: string
 }
 
 interface AnalysisResp {
@@ -41,13 +42,15 @@ export function deltaToMessage(delta: Delta): AnalysisResp {
             if (!iterator.insert || iterator.insert == "\n") continue
 
             if (node && node.type == 1) {
+                node.text = node.text + iterator.insert
                 node.content = node.content + iterator.insert
                 continue
             }
 
             resp.items.push({
                 "type": 1,
-                "content": iterator.insert
+                "content": iterator.insert,
+                "text": iterator.insert
             })
 
             continue
@@ -63,13 +66,15 @@ export function deltaToMessage(delta: Delta): AnalysisResp {
             })
 
             if (node && node.type == 1) {
+                node.text = node.text
                 node.content = node.content + ` ${mention.denotationChar}${mention.value}`
                 continue
             }
 
             resp.items.push({
                 "type": 1,
-                "content": `${mention.denotationChar}${mention.value}`
+                "content": `${mention.denotationChar}${mention.value}`,
+                "text": ``,
             })
 
             continue
@@ -79,7 +84,8 @@ export function deltaToMessage(delta: Delta): AnalysisResp {
         if (iterator.insert.image) {
             resp.items.push({
                 "type": 3,
-                "content": iterator.insert.image
+                "content": iterator.insert.image,
+                "text": iterator.insert.image,
             })
             continue
         }
@@ -95,7 +101,8 @@ export function deltaToMessage(delta: Delta): AnalysisResp {
 
             resp.items.push({
                 "type": 1,
-                "content": emoji.alt
+                "content": emoji.alt,
+                "text": emoji.alt
             })
 
             continue
@@ -111,10 +118,12 @@ export function deltaToMessage(delta: Delta): AnalysisResp {
     if (resp.items.length) {
         if (resp.items[0].type == 1) {
             resp.items[0].content = removeLeadingNewlines(resp.items[0].content)
+            resp.items[0].text = removeLeadingNewlines(resp.items[0].text)
         }
 
         if (resp.items[resp.items.length - 1].type == 1) {
             resp.items[resp.items.length - 1].content = removeTrailingNewlines(resp.items[resp.items.length - 1].content)
+            resp.items[resp.items.length - 1].text = removeTrailingNewlines(resp.items[resp.items.length - 1].text)
         }
     }
 

@@ -79,6 +79,7 @@ const onSendTextEvent = throttle((value: any) => {
   let message = {
     type: "text",
     content: data.items[0].content,
+    text: data.items[0].text,
     quote_id: data.quoteId,
     mention: {
       type: data.mentions.find((v: any) => v.atid == 1) ? 1 : 0,

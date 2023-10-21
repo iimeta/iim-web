@@ -232,6 +232,10 @@ const onDownloadFile = (data: IMessageRecord) => {
     return downloadImage(data.extra.url, `${data.msg_id}.${data.extra.suffix}`);
   }
 
+  if (data.msg_type == 12) {
+    return downloadImage(data.extra.items[0].content, `${data.msg_id}`);
+  }
+
   if (data.msg_type == 4) {
     return window["$message"].info("音频暂不支持下载");
   }

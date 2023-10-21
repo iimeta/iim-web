@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NImage } from 'naive-ui'
 import { textReplaceEmoji } from '@/utils/emojis'
-import { textReplaceLink } from '@/utils/strings'
+import { textReplaceLink, textReplaceMention } from '@/utils/strings'
 import { Data, MixedExtra } from './types.d'
 import { getImageInfo } from '@/utils/functions'
 
@@ -60,7 +60,7 @@ const img = (src, width = 200) => {
     <pre>
       <template v-for="item in extra.items">
         <template v-if="item.type === 1">
-          <span v-html="textReplaceEmoji(textReplaceLink(item.content))" />
+          <span v-html="textReplaceEmoji(textReplaceLink(textReplaceMention(item.content, '#1890ff')))" />
         </template>
 
         <template v-else-if="item.type === 3">
@@ -78,12 +78,23 @@ const img = (src, width = 200) => {
 
 <style lang="less" scoped>
 .im-message-mixed {
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 10px 0px 10px 10px;
+  background: var(--im-message-left-bg-color);
   min-width: 30px;
   min-height: 30px;
-  padding: 3px;
-  color: var(--im-message-left-text-color);
-  background: var(--im-message-left-bg-color);
-  border-radius: 0px 10px 10px 10px;
+
+  &.left {
+    background: var(--im-message-right-bg-color);
+    border-radius: 0px 10px 10px 10px;
+  }
+
+  :deep(.n-image img) {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
 
   &.right {
     background-color: var(--im-message-right-bg-color);
@@ -92,7 +103,7 @@ const img = (src, width = 200) => {
   }
 
   &.maxwidth {
-    max-width: 70%;
+    max-width: 50%;
   }
 
   pre {

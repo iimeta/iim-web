@@ -151,10 +151,13 @@ const onTalkOpenContext = (data: any) => {
 // 清空上下文
 const onTalkClearContext = (data: any) => {
   TalkClearContext({
+    talk_type: data.talk_type,
     receiver_id: data.receiver_id,
-  }).then(({ code }) => {
+  }).then(({ code, message }) => {
     if (code == 200) {
       window["$message"].success("上下文已清空");
+    } else {
+      window["$message"].error(message);
     }
   });
 };

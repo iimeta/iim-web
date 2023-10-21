@@ -48,7 +48,7 @@ export function useMenu() {
     dropdown.options.push({ label: '删除', key: 'delete' })
     dropdown.options.push({ label: '多选', key: 'multiSelect' })
 
-    if ([3, 4, 5].includes(item.msg_type)) {
+    if ([3, 4, 5, 12].includes(item.msg_type)) {
       dropdown.options.push({ label: '下载', key: 'download' })
     }
 

@@ -11,13 +11,14 @@ import {
   NotebookAndPen,
   AddressBook,
   SmartOptimization,
+  VipOne,
 } from '@icon-park/vue-next'
 
 defineProps({
   index: {
     type: Number,
     default: 0,
-  },
+  }
 })
 
 const userStore = useUserStore()
@@ -48,17 +49,20 @@ const menus = reactive([
     icon: NotebookAndPen,
     title: '笔记',
   },
-  // {
-  //   link: '/settings/detail',
-  //   icon: SmartOptimization,
-  //   title: 'Ai助手',
-  // },
   {
     link: '/settings/detail',
     icon: SettingTwo,
     title: '设置',
   },
 ])
+
+const menusFooter = reactive([
+  {
+    link: "/vip/detail",
+    icon: VipOne,
+    title: "会员",
+  },
+]);
 
 const onLogout = () => {
   userStore.logoutLogin()
@@ -126,6 +130,28 @@ const onClickMenu = menu => {
     </main>
 
     <footer class="menu-footer">
+      <div
+        class="menu-footer-items"
+        v-for="(nav, j) in menusFooter"
+        :key="nav.link"
+        :class="{
+          active: 4 == index,
+        }"
+        @click="onClickMenu(nav)"
+      >
+        <p>
+          <component
+            :is="nav.icon"
+            :theme="4 == index ? 'filled' : 'outline'"
+            :fill="4 == index ? '#1890ff' : color"
+            :strokeWidth="2"
+            :size="22"
+          />
+        </p>
+
+        <span>{{ nav.title }}</span>
+      </div>
+
       <div>
         <a
           class="pointer"
@@ -183,7 +209,7 @@ const onClickMenu = menu => {
   }
 
   .menu-footer {
-    height: 90px;
+    height: 18%;
     width: 100%;
 
     div {
@@ -191,11 +217,56 @@ const onClickMenu = menu => {
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-bottom: 10px;
     }
   }
 }
 
 .menu-items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 12px;
+  width: 54px;
+  height: 54px;
+  margin: 8px auto;
+  border-radius: 10px;
+
+  // &.active {
+  //   &::after {
+  //     position: absolute;
+  //     content: '';
+  //     width: 0;
+  //     height: 0;
+  //     right: -8px;
+  //     border-top: 8px solid transparent;
+  //     border-bottom: 8px solid transparent;
+  //     border-right: 8px solid #ffffff;
+  //   }
+  // }
+
+  .hotspot {
+    width: 5px;
+    height: 5px;
+    --hotspot: #ff1e1e;
+    background: var(--hotspot);
+    display: inline-block;
+    border-radius: 5px;
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    animation: notifymove 3s infinite;
+    animation-direction: alternate;
+    -webkit-animation: notifymove 3s infinite;
+  }
+}
+
+.menu-footer-items {
   position: relative;
   display: flex;
   flex-direction: column;

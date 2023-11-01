@@ -1,209 +1,131 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import {
-  NForm,
-  NFormItem,
-  NInput,
-  NDatePicker,
-  NRadio,
-  NRadioGroup,
-  NSpace,
-} from 'naive-ui'
-import { ServeUpdateUserDetail, ServeGetUserDetail } from '@/api/user'
-import AvatarCropper from '@/components/base/AvatarCropper.vue'
-import { hidePhone } from '@/utils/strings'
-import { useUserStore } from '@/store/user'
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import { ServeVipInfo, ServeGenerateSecretKey } from "@/api/vip";
+import { clipboard } from "@/utils/common";
 
-const userStore = useUserStore()
-const router = useRouter()
-const cropper = ref(false)
+const router = useRouter();
 
 const detail = reactive({
-  avatar: '',
-  nickname: '',
-  mobile: '',
-  email: '',
-  gender: '0',
-  motto: '0',
-  birthday: ref(),
-  loading: false,
-})
+  user_id: "",
+  nickname: "",
+  avatar: "",
+  secret_key: "",
+  reg_time: "",
+  usage_count: 0,
+  used_tokens: 0,
+  total_tokens: 0,
+});
 
-// 加载用户信息
-ServeGetUserDetail().then(({ data }) => {
-  detail.nickname = data.nickname.toString()
-  detail.mobile = data.mobile.toString()
-  detail.email = data.email.toString()
-  detail.gender = data.gender.toString()
-  detail.motto = data.motto.toString()
-  detail.avatar = data.avatar
-  if (data.birthday) {
-    detail.birthday = ref(data.birthday)
-  }
-})
+// 加载会员信息
+ServeVipInfo().then(({ data }) => {
+  detail.user_id = data.user_id;
+  detail.nickname = data.nickname;
+  detail.avatar = data.avatar;
+  detail.secret_key = data.secret_key;
+  detail.reg_time = data.reg_time;
+  detail.usage_count = data.usage_count;
+  detail.used_tokens = data.used_tokens;
+  detail.total_tokens = data.total_tokens;
+});
 
-// 修改用户信息
-const onChangeDetail = () => {
-  if (!detail.nickname.trim()) {
-    return window['$message'].warning('昵称不能为空')
-  }
-
-  detail.loading = true
-
-  const response = ServeUpdateUserDetail({
-    nickname: detail.nickname.trim(),
-    avatar: detail.avatar,
-    motto: detail.motto,
-    gender: parseInt(detail.gender),
-    birthday: detail.birthday,
-  })
-
-  response.then(() => {
-    window['$message'].success('信息保存成功')
-    userStore.loadSetting()
-  })
-
-  response.catch(() => {
-    window['$message'].warning('信息保存失败')
-  })
-
-  response.finally(() => {
-    detail.loading = false
+// 生成密钥
+const onGenerateSecretKey = () => {
+  const response = ServeGenerateSecretKey().then(res => {
+    if (res.code == 200) {
+      window['$message'].success('生成成功')
+      detail.secret_key = res.data.secret_key;
+    } else {
+      window['$message'].error(res.message)
+    }
   })
 }
 
-const onUploadAvatar = avatar => {
-  cropper.value = false
-  detail.avatar = avatar
-  onChangeDetail()
-}
+// 复制密钥
+const onCopySecretKey = () => {
+    return clipboard(detail.secret_key, () =>
+      window["$message"].success("已复制")
+    );
+};
+
 </script>
 
 <template>
   <section class="el-container container">
-    <aside class="el-aside el-aside-left">
-      <n-avatar
-        :size="200"
-        :src="detail.avatar"
-        @click="cropper = true"
-        class="avatar-box pointer"
-      />
+    <n-avatar
+      round
+      class="avatar mt20 mr20 ml20"
+      :size="100"
+      :src="detail.avatar"
+    />
 
-      <n-button text @click="cropper = true"> 点击修改头像 </n-button>
-    </aside>
+    <div class="infos mt20">
+      <div class="info-item">
+        <span class="name">&#12288;会员ID :</span>
+        <span class="text">{{ detail.user_id }}</span>
+      </div>
+      <div class="info-item">
+        <span class="name">会员昵称 :</span>
+        <span class="text">{{ detail.nickname }}</span>
+      </div>
 
-    <main class="el-main" style="padding-right: 20px">
-      <n-form
-        ref="formRef"
-        label-placement="left"
-        label-width="auto"
-        require-mark-placement="right-hanging"
-        size="medium"
-        style="max-width: 500px; margin-top: 25px"
-      >
-        <!-- <n-form-item label="登录账号：">
-          {{ hidePhone(detail.mobile) }}
-          <n-button
-            class="mt-l15"
-            type="primary"
-            text
-            @click="router.push('/settings/security')"
-          >
-            修改
-          </n-button>
-        </n-form-item>
-        <n-form-item label="电子邮箱：">
-          {{ detail.email }}
-          <n-button
-            class="mt-l15"
-            type="primary"
-            text
-            @click="router.push('/settings/security')"
-          >
-            修改
-          </n-button>
-        </n-form-item> -->
-        <n-form-item label="我的昵称：">
-          <n-input
-            placeholder="我的昵称"
-            v-model:value="detail.nickname"
-            maxlength="20"
-            show-count
-          />
-        </n-form-item>
-        <n-form-item label="我的性别：">
-          <n-radio-group v-model:value="detail.gender" name="gender">
-            <n-space>
-              <n-radio key="1" value="1"> 男 </n-radio>
-              <n-radio key="2" value="2"> 女 </n-radio>
-              <n-radio key="0" value="0"> 保密 </n-radio>
-            </n-space>
-          </n-radio-group>
-        </n-form-item>
-        <n-form-item label="我的生日：">
-          <n-date-picker
-            v-model:formatted-value="detail.birthday"
-            type="date"
-            value-format="yyyy-MM-dd"
-          />
-        </n-form-item>
-        <n-form-item label="个性签名：">
-          <n-input
-            placeholder="编辑个签，展示我的独特态度"
-            type="textarea"
-            maxlength="500"
-            show-count
-            v-model:value="detail.motto"
-            :autosize="{
-              minRows: 3,
-              maxRows: 5,
-            }"
-          />
-        </n-form-item>
-
-        <n-form-item>
-          <n-button
-            type="primary"
-            @click="onChangeDetail"
-            :loading="detail.loading"
-            style="margin-left: 94px"
-          >
-            保存修改
-          </n-button>
-        </n-form-item>
-      </n-form>
-    </main>
+      <div class="info-item">
+        <span class="name">注册时间 :</span>
+        <span class="text">{{ detail.reg_time }}</span>
+      </div>
+      <div class="info-item">
+        <span class="name">免费额度 :</span>
+        <span class="text">{{ detail.used_tokens }} / {{ detail.total_tokens }}</span>
+      </div>
+      <div class="info-item">
+        <span class="name">使用次数 :</span>
+        <span class="text">{{ detail.usage_count }}</span>
+      </div>
+      <div class="info-item">
+        <span class="name"> API 密钥 :</span>
+        <span class="text">{{ detail.secret_key || "-" }}</span>
+        <span class="tools">
+          <n-button type="primary" text @click="onCopySecretKey"> 复制 </n-button>
+        </span>
+        <span class="tools">
+          <n-button type="primary" text @click="onGenerateSecretKey"> 生成 </n-button>
+        </span>
+      </div>
+    </div>
   </section>
-
-  <!-- 头像裁剪组件 -->
-  <AvatarCropper
-    v-if="cropper"
-    @close="cropper = false"
-    @success="onUploadAvatar"
-  />
 </template>
 
 <style lang="less" scoped>
-@import '@/assets/css/settting.less';
+.infos {
+  .info-item {
+    height: 30px;
+    width: 100%;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
 
-.container {
-  height: auto;
-  min-width: 550px;
-}
+    .name {
+      width: 70px;
+      flex-shrink: 0;
+      color: #afabab;
+    }
 
-.el-aside-left {
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-  margin-right: 10px;
-}
+    .text {
+      flex: 1 auto;
+      margin-left: 5px;
+    }
 
-.avatar-box {
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  margin-bottom: 20px;
+    .edit {
+      text-decoration: underline;
+      text-decoration-style: solid;
+      text-underline-offset: 3px;
+    }
+
+    .tools {
+      padding-left: 20px;
+      width: 30px;
+      display: block;
+    }
+  }
 }
 </style>

@@ -9,6 +9,11 @@ const menus = [
     path: '/vip/detail',
     icon: User,
   },
+  {
+    name: '会员权益',
+    path: '/vip/vip',
+    icon: User,
+  },
 ]
 </script>
 

@@ -9,5 +9,10 @@ export default {
       meta: { requiresAuth: true },
       component: () => import('@/views/vip/detail.vue'),
     },
+    {
+      path: '/vip/vip',
+      meta: { requiresAuth: true },
+      component: () => import('@/views/vip/vip.vue'),
+    },
   ],
 }

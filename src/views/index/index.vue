@@ -52,7 +52,7 @@ onUnmounted(() => {
 
 .small-screen {
   .el-aside {
-    width: 260px;
+    width: 240px;
   }
 }
 </style>

@@ -9,3 +9,8 @@ export const ServeVipInfo = () => {
 export const ServeGenerateSecretKey = () => {
   return get('/api/v1/vip/generate_secret_key')
 }
+
+// 会员权益服务接口
+export const ServeVips = () => {
+  return get('/api/v1/vip/vips')
+}

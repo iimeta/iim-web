@@ -209,7 +209,6 @@ const onClickMenu = menu => {
   }
 
   .menu-footer {
-    height: 18%;
     width: 100%;
 
     div {

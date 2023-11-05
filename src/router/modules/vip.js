@@ -14,5 +14,10 @@ export default {
       meta: { requiresAuth: true },
       component: () => import('@/views/vip/vip.vue'),
     },
+    {
+      path: '/vip/invite',
+      meta: { requiresAuth: true },
+      component: () => import('@/views/vip/invite.vue'),
+    },
   ],
 }

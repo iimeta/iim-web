@@ -16,21 +16,21 @@ ServeVips({}).then((res) => {
 </script>
 
 <template>
-  <section class="el-container container">
-    <div class="table">
+  <section class="el-container is-vertical height100">
+    <div class="table el-main scroller me-scrollbar me-scrollbar-thumb">
       <div class="theader">
         <div>会员等级</div>
         <div>模型权限</div>
-        <div>免费额度</div>
-        <div>备注说明</div>
+        <div>免费额度(tokens)</div>
+        <div>权益说明</div>
       </div>
 
       <div class="row" v-for="item in items" :key="item.level">
         <div>{{ item.name }}</div>
         <div>
-          <p v-for="item in item.models" :key="item">
+          <span class="models" v-for="item in item.models" :key="item">
             {{ item }}
-          </p>
+          </span>
         </div>
         <div>{{ item.free_tokens }}</div>
         <div>{{ item.remark || "-" }}</div>
@@ -46,6 +46,7 @@ ServeVips({}).then((res) => {
   .theader {
     width: 100%;
     border-bottom: 1px solid var(--border-color);
+    font-size: 16px;
   }
 
   .row {
@@ -62,7 +63,11 @@ ServeVips({}).then((res) => {
       width: 100%;
       display: block;
       text-align: center;
-      font-size: 14px;
+    }
+
+    .models {
+      width: 150px;
+      display: inline-block;
     }
   }
 }

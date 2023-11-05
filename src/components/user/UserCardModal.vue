@@ -178,7 +178,7 @@ const onAfterEnter = () => {
             :size="100"
             :src="state.avatar"
             :username="state.remark || state.nickname"
-            :font-size="30"
+            :font-size="70"
           />
 
           <div class="gender" v-show="state.gender > 0">

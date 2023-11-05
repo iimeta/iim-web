@@ -85,11 +85,13 @@ const onUploadAvatar = avatar => {
 
   <section class="el-container container">
     <aside class="el-aside el-aside-left">
-      <n-avatar
+      <im-avatar
         :size="200"
         :src="detail.avatar"
         @click="cropper = true"
         class="avatar-box pointer"
+        :username="detail.nickname"
+        :fontSize="160"
       />
 
       <n-button text @click="cropper = true"> 点击修改头像 </n-button>

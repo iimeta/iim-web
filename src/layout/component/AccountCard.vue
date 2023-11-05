@@ -7,7 +7,7 @@ const store = useUserStore();
 <template>
   <section class="account-card">
     <div class="card-header">
-      <n-avatar round class="avatar" :size="100" :src="store.avatar" />
+      <im-avatar round class="avatar" :size="100" :src="store.avatar" :username="store.nickname" :fontSize="70"/>
 
       <div class="nickname text-ellipsis">
         {{ store.nickname || "未设置昵称" }}

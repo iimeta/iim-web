@@ -3,10 +3,11 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ServeVipInfo, ServeGenerateSecretKey } from "@/api/vip";
 import { clipboard } from "@/utils/common";
-
-const router = useRouter();
+import { Info } from '@icon-park/vue-next'
+import { NPopover } from 'naive-ui'
 
 const detail = reactive({
+  vip_name: "",
   user_id: "",
   nickname: "",
   avatar: "",
@@ -19,6 +20,7 @@ const detail = reactive({
 
 // 加载会员信息
 ServeVipInfo().then(({ data }) => {
+  detail.vip_name = data.vip_name;
   detail.user_id = data.user_id;
   detail.nickname = data.nickname;
   detail.avatar = data.avatar;
@@ -52,13 +54,8 @@ const onCopySecretKey = () => {
 
 <template>
   <section class="el-container container">
-    <n-avatar
-      round
-      class="avatar mt20 mr20 ml20"
-      :size="100"
-      :src="detail.avatar"
-    />
 
+    <im-avatar round class="mt20 mr20 ml20" :size="80" :src="detail.avatar" :username="detail.nickname" :fontSize="50"/>
     <div class="infos mt20">
       <div class="info-item">
         <span class="name">&#12288;会员ID :</span>
@@ -68,7 +65,10 @@ const onCopySecretKey = () => {
         <span class="name">会员昵称 :</span>
         <span class="text">{{ detail.nickname }}</span>
       </div>
-
+      <div class="info-item">
+        <span class="name">会员等级 :</span>
+        <span class="text">{{ detail.vip_name || "-" }}</span>
+      </div>
       <div class="info-item">
         <span class="name">注册时间 :</span>
         <span class="text">{{ detail.reg_time }}</span>
@@ -76,10 +76,22 @@ const onCopySecretKey = () => {
       <div class="info-item">
         <span class="name">免费额度 :</span>
         <span class="text">{{ detail.used_tokens }} / {{ detail.total_tokens }}</span>
+        <n-popover trigger="hover">
+          <template #trigger>
+            <Info theme="outline" size="14" fill="#1890ff" class="ml10 pointer"/>
+          </template>
+          <span>免费额度(tokens)每天0点刷新</span>
+        </n-popover>
       </div>
       <div class="info-item">
         <span class="name">使用次数 :</span>
         <span class="text">{{ detail.usage_count }}</span>
+        <n-popover trigger="hover">
+          <template #trigger>
+            <Info theme="outline" size="14" fill="#1890ff" class="ml10 pointer"/>
+          </template>
+          <span>使用次数每天0点刷新</span>
+        </n-popover>
       </div>
       <div class="info-item">
         <span class="name"> API 密钥 :</span>
@@ -107,11 +119,10 @@ const onCopySecretKey = () => {
     .name {
       width: 70px;
       flex-shrink: 0;
-      color: #afabab;
+      color: #625f5f;
     }
 
     .text {
-      flex: 1 auto;
       margin-left: 5px;
     }
 
@@ -125,6 +136,16 @@ const onCopySecretKey = () => {
       padding-left: 20px;
       width: 30px;
       display: block;
+    }
+  }
+}
+
+html[data-theme="dark"] {
+  .infos {
+    .info-item {
+      .name {
+        color: #afabab;
+      }
     }
   }
 }

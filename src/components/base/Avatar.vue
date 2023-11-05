@@ -17,7 +17,7 @@ defineProps({
   },
   fontSize: {
     type: Number,
-    default: 14,
+    default: 16,
   },
 })
 </script>

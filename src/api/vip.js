@@ -14,3 +14,8 @@ export const ServeGenerateSecretKey = () => {
 export const ServeVips = () => {
   return get('/api/v1/vip/vips')
 }
+
+// 邀请好友服务接口
+export const ServeInviteFriends = () => {
+  return get('/api/v1/vip/friends')
+}

@@ -14,7 +14,7 @@ const inviteFriends = reactive({
 ServeInviteFriends({}).then((res) => {
   if (res.code == 200) {
     inviteFriends.invite_url = res.data.invite_url;
-    inviteFriends.value = res.data.items || [];
+    inviteFriends.items = res.data.items || [];
 
     let baseURL = import.meta.env.VITE_BASE_API;
     if (baseURL == "") {
@@ -42,6 +42,7 @@ const onCopy = () => {
       <span class="tools">
         <n-button type="primary" text @click="onCopy"> 复制 </n-button>
       </span>
+      <p class="inviteUrl mt10">邀请人数: {{ inviteFriends.items.length }}</p>
     </div>
     <div class="table el-main scroller me-scrollbar me-scrollbar-thumb">
       <div class="theader">
@@ -50,7 +51,7 @@ const onCopy = () => {
         <div>注册时间</div>
       </div>
 
-      <div class="row" v-for="item in inviteFriends.items" :key="item.level">
+      <div class="row" v-for="item in inviteFriends.items" :key="item.email">
         <div>{{ item.nickname }}</div>
         <div>{{ item.email }}</div>
         <div>{{ item.created_at }}</div>

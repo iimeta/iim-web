@@ -1,9 +1,9 @@
 <script setup>
-import { reactive, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useUserStore, useTalkStore, useNotifyStore } from '@/store'
-import { NPopover } from 'naive-ui'
-import AccountCard from './AccountCard.vue'
+import { reactive, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore, useTalkStore, useNotifyStore } from "@/store";
+import { NPopover } from "naive-ui";
+import AccountCard from "./AccountCard.vue";
 import {
   GithubOne,
   SettingTwo,
@@ -12,49 +12,50 @@ import {
   AddressBook,
   SmartOptimization,
   VipOne,
-} from '@icon-park/vue-next'
+  Api,
+} from "@icon-park/vue-next";
 
 defineProps({
   index: {
     type: Number,
     default: 0,
-  }
-})
+  },
+});
 
-const userStore = useUserStore()
-const talkStore = useTalkStore()
-const router = useRouter()
+const userStore = useUserStore();
+const talkStore = useTalkStore();
+const router = useRouter();
 
-const notifyStore = useNotifyStore()
+const notifyStore = useNotifyStore();
 
 const color = computed(() => {
-  return notifyStore.darkTheme ? '#ffffff' : '#333'
-})
+  return notifyStore.darkTheme ? "#ffffff" : "#333";
+});
 
 const menus = reactive([
   {
-    link: '/message',
+    link: "/message",
     icon: Message,
-    title: '消息',
+    title: "消息",
     hotspot: computed(() => talkStore.talkUnreadNum > 0),
   },
   {
-    link: '/contact/friend',
+    link: "/contact/friend",
     icon: AddressBook,
-    title: '通讯录',
+    title: "通讯录",
     hotspot: computed(() => userStore.isContactApply || userStore.isGroupApply),
   },
   {
-    link: '/note',
+    link: "/note",
     icon: NotebookAndPen,
-    title: '笔记',
+    title: "笔记",
   },
   {
-    link: '/settings/detail',
+    link: "/settings/detail",
     icon: SettingTwo,
-    title: '设置',
+    title: "设置",
   },
-])
+]);
 
 const menusFooter = reactive([
   {
@@ -65,16 +66,16 @@ const menusFooter = reactive([
 ]);
 
 const onLogout = () => {
-  userStore.logoutLogin()
-}
+  userStore.logoutLogin();
+};
 
-const onClickMenu = menu => {
+const onClickMenu = (menu) => {
   if (menu.external) {
-    window.open(menu.link)
+    window.open(menu.link);
   } else {
-    router.push(menu.link)
+    router.push(menu.link);
   }
-}
+};
 </script>
 
 <template>
@@ -98,7 +99,7 @@ const onClickMenu = menu => {
       </n-popover>
 
       <span class="online-status" :class="{ online: userStore.online }">
-        {{ userStore.online ? '在线' : '连接中...' }}
+        {{ userStore.online ? "在线" : "连接中..." }}
       </span>
     </header>
 
@@ -150,6 +151,18 @@ const onClickMenu = menu => {
         </p>
 
         <span>{{ nav.title }}</span>
+      </div>
+
+      <div>
+        <a
+          class="pointer"
+          href="https://github.com/iimeta/iim-api"
+          target="_blank"
+        >
+          <Api theme="outline" size="22" :fill="color" :strokeWidth="2" />
+          <br/>
+          <span style="color: #d7d7d7;">API</span>
+        </a>
       </div>
 
       <div>
@@ -216,6 +229,7 @@ const onClickMenu = menu => {
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-top: 10px;
       padding-bottom: 10px;
     }
   }

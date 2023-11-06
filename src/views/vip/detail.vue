@@ -80,7 +80,7 @@ const onCopySecretKey = () => {
           <template #trigger>
             <Info theme="outline" size="14" fill="#1890ff" class="ml10 pointer"/>
           </template>
-          <span>免费额度(tokens)每天0点刷新</span>
+          <span>每天需在线30分钟以上, 方可在明日0点刷新免费额度(tokens)</span>
         </n-popover>
       </div>
       <div class="info-item">
@@ -90,7 +90,7 @@ const onCopySecretKey = () => {
           <template #trigger>
             <Info theme="outline" size="14" fill="#1890ff" class="ml10 pointer"/>
           </template>
-          <span>使用次数每天0点刷新</span>
+          <span>每天0点刷新使用次数</span>
         </n-popover>
       </div>
       <div class="info-item">

@@ -6,7 +6,7 @@ import { User,VipOne,People } from '@icon-park/vue-next'
 const menus = [
   {
     name: '会员信息',
-    path: '/vip/detail',
+    path: '/vip/info',
     icon: User,
     size: 18,
   },

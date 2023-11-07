@@ -59,7 +59,7 @@ const menus = reactive([
 
 const menusFooter = reactive([
   {
-    link: "/vip/detail",
+    link: "/vip/info",
     icon: VipOne,
     title: "会员",
   },
@@ -160,8 +160,8 @@ const onClickMenu = (menu) => {
           target="_blank"
         >
           <Api theme="outline" size="22" :fill="color" :strokeWidth="2" />
-          <br/>
-          <span style="color: #d7d7d7;">API</span>
+          <br />
+          <span class="api">API</span>
         </a>
       </div>
 
@@ -320,6 +320,12 @@ const onClickMenu = (menu) => {
     animation: notifymove 3s infinite;
     animation-direction: alternate;
     -webkit-animation: notifymove 3s infinite;
+  }
+}
+
+html[data-theme="dark"] {
+  .api {
+    color: #d7d7d7;
   }
 }
 

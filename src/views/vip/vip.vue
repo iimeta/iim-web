@@ -22,7 +22,7 @@ ServeVips({}).then((res) => {
         <div>会员等级</div>
         <div>模型权限</div>
         <div>免费额度(tokens)</div>
-        <div>权益说明</div>
+        <div class="mr20">权益说明</div>
       </div>
 
       <div class="row" v-for="item in items" :key="item.level">
@@ -33,7 +33,7 @@ ServeVips({}).then((res) => {
           </span>
         </div>
         <div>{{ item.free_tokens }}</div>
-        <div>{{ item.remark || "-" }}</div>
+        <div class="mr20">{{ item.remark || "-" }}</div>
       </div>
     </div>
   </section>

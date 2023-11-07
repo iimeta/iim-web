@@ -1,13 +1,13 @@
 export default {
   path: '/vip',
   name: 'vip',
-  redirect: '/vip/detail',
+  redirect: '/vip/info',
   component: () => import('@/views/vip/layout.vue'),
   children: [
     {
-      path: '/vip/detail',
+      path: '/vip/info',
       meta: { requiresAuth: true },
-      component: () => import('@/views/vip/detail.vue'),
+      component: () => import('@/views/vip/info.vue'),
     },
     {
       path: '/vip/vip',

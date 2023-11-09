@@ -126,7 +126,7 @@ const onCopySecretKey = () => {
       </div>
       <div class="info-item">
         <span class="name"> API 接口 :</span>
-        <a href="https://github.com/iimeta/iim-api" target="_blank">
+        <a href="https://github.com/iimeta/iim-api" target="_blank" class="ml5">
           <span>
             <n-button type="primary" text> 查看 </n-button>
           </span>

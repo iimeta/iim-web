@@ -19,9 +19,12 @@ ServeInviteFriends({}).then((res) => {
     let baseURL = import.meta.env.VITE_BASE_API;
     if (baseURL == "") {
       const url = new URL(window.location.href);
-      baseURL = `${url.protocol}//${url.hostname}:${
-        url.port || (url.protocol == "https:" ? 443 : 80)
-      }`;
+      baseURL = `${url.protocol}//${url.hostname}`;
+      if (url.port) {
+        if ((url.protocol == "https:" && url.port != 443) || (url.protocol == "http:" && url.port != 80)){
+          baseURL = baseURL+`:${url.port}`;
+        }
+      }
     }
     inviteFriends.invite_url = baseURL + inviteFriends.invite_url;
   }

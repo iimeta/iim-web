@@ -131,6 +131,11 @@ const onCopySecretKey = () => {
             <n-button type="primary" text> 查看 </n-button>
           </span>
         </a>
+        <a href="https://gitee.com/iimeta/iim-api" target="_blank" class="ml20">
+          <span>
+            <n-button type="primary" text> 备用 </n-button>
+          </span>
+        </a>
       </div>
     </div>
   </section>

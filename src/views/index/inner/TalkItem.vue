@@ -66,15 +66,13 @@ defineProps({
         </div>
 
         <div class="tip">
-
-          <div v-if="data.is_disturb" class="disturb">
-            <n-icon :component="CloseRemind" />
-          </div>
-
           <div v-if="data.is_open_context" class="disturb">
             <n-icon :component="Power" />
           </div>
 
+          <div v-if="data.is_disturb" class="disturb">
+            <n-icon :component="CloseRemind" />
+          </div>
           <div v-else class="unread" v-show="data.unread_num">
             <span class="badge">
               {{ data.unread_num > 99 ? '99+' : data.unread_num }}

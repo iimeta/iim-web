@@ -5,7 +5,7 @@
 # 智元 IM
 
 [![Release](https://img.shields.io/github/v/release/iimeta/iim-web?color=blue)](https://github.com/iimeta/iim-web/releases)
-[![License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)](https://github.com/iimeta/iim-web/main/LICENSE)
+[![License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)](https://github.com/iimeta/iim-web/blob/main/LICENSE)
 
 </div>
 
@@ -57,7 +57,7 @@ npm run electron:build
 <img src="https://raw.githubusercontent.com/iimeta/iim-client/main/resource/images/Author.png" width="320" alt="作者"/>
 
  ## 交流群
-<img src="https://iim.ai/public/images/WeChatGroup.jpg" width="320" alt="交流群"/>
+<img src="https://iim.ai/public/images/WeChatGroup.jpg?t=20231112" width="320" alt="交流群"/>
 
 
 ![Star History Chart](https://api.star-history.com/svg?repos=iimeta/iim-web&type=Date)

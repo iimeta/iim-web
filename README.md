@@ -2,7 +2,7 @@
 
 <img src="https://iim.ai/public/images/logo.png?t=20231126" width="256"/>
 
-# 智元 IM
+# 智元 IIM
 
 [![Release](https://img.shields.io/github/v/release/iimeta/iim-web?color=blue)](https://github.com/iimeta/iim-web/releases)
 [![License](https://img.shields.io/static/v1?label=license&message=MIT&color=green)](https://github.com/iimeta/iim-web/blob/main/LICENSE)

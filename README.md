@@ -1,6 +1,6 @@
 <div align=center>
 
-<img src="https://iim.ai/public/images/logo.png?t=20231126" width="128"/>
+<img src="https://iim.ai/public/images/logo.png?t=2023112622" width="128"/>
 
 # 智元 IIM
 

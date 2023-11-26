@@ -114,7 +114,11 @@ function registerUnreadListener() {
     } else {
       setInterval(() => {
         if (useTalk.talkUnreadNum > 0) {
-          el.innerText = el.innerText == title ? '您有新的消息未读' : title
+          if (document.visibilityState === 'hidden') {
+            el.innerText = el.innerText == title ? '您有新的消息未读' : title
+          } else {
+            el.innerText = title
+          }
         } else {
           el.innerText = title
         }

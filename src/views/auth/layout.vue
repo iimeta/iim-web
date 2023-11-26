@@ -6,7 +6,10 @@ import { GithubOne } from "@icon-park/vue-next";
 
 <template>
   <!-- <div id="logo-name" v-if="!isElectronMode()">IIM</div> -->
-  <img class="logo" src="/logo.png" />
+  <div>
+    <img class="logo" src="/logo.png" />
+    <span class="logo-name">智元 IIM</span>
+  </div>
 
   <section class="section">
     <router-view />
@@ -15,7 +18,11 @@ import { GithubOne } from "@icon-park/vue-next";
   <div class="copyright">
     <span><b>Copyright © 2023 IIM. All Rights Reserved.</b></span>
     <br />
-    <a href="https://github.com/iimeta/iim-client" target="_blank"><span><b>v{{ config.version }}</b></span></a>
+    <a href="https://github.com/iimeta/iim-client" target="_blank"
+      ><span
+        ><b>v{{ config.version }}</b></span
+      ></a
+    >
   </div>
 
   <div class="fly-box">

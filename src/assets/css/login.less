@@ -11,10 +11,22 @@
 
 .logo {
   position: fixed;
-  width: 156px;
-  height: 80px;
   top: 20px;
   left: 50px;
+}
+
+.logo-name {
+  position: fixed;
+  font-size: 30px;
+  font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+  top: 26px;
+  left: 128px;
+}
+
+html[data-theme="dark"] {
+  .logo-name {
+    color: #fff;
+  }
 }
 
 .copyright {

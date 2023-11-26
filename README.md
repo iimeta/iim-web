@@ -50,8 +50,11 @@ npm run build
 npm run electron:build
 ```
 
-## 项目后端
-[后端传送门](https://github.com/iimeta/iim-client)
+## 开源地址
+| 仓库 | 前端                              | 后端                                 |
+| ---- | --------------------------------- | ------------------------------------ |
+| 主库 | https://github.com/iimeta/iim-web | https://github.com/iimeta/iim-client |
+| 码云 | https://gitee.com/iimeta/iim-web  | https://gitee.com/iimeta/iim-client  |
 
 ## 作者
 <img src="https://iim.ai/public/images/Author.png?t=20231126" width="320" alt="作者"/>

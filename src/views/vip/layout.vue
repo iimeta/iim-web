@@ -26,7 +26,7 @@ const menus = [
 </script>
 
 <template>
-  <Layout :index="4">
+  <Layout :index="3">
     <SubViewLayout title="会员中心" :menus="menus" />
   </Layout>
 </template>

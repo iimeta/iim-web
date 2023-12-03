@@ -1,44 +1,44 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { NForm, NFormItem, NInput } from 'naive-ui'
-import AvatarCropper from '@/components/base/AvatarCropper.vue'
-import { ServeGroupDetail, ServeEditGroup } from '@/api/group'
+import { ref, reactive, onMounted } from "vue";
+import { NForm, NFormItem, NInput } from "naive-ui";
+import AvatarCropper from "@/components/base/AvatarCropper.vue";
+import { ServeGroupDetail, ServeEditGroup } from "@/api/group";
 
 const props = defineProps({
   id: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const cropper = ref(false)
+const cropper = ref(false);
 
 const modelDetail = reactive({
-  name: '',
-  avatar: '',
-  profile: '',
-})
+  name: "",
+  avatar: "",
+  profile: "",
+});
 
-const onUploadAvatar = avatar => {
-  cropper.value = false
-  modelDetail.avatar = avatar
+const onUploadAvatar = (avatar) => {
+  cropper.value = false;
+  modelDetail.avatar = avatar;
 
-  onSubmitBaseInfo()
-}
+  onSubmitBaseInfo();
+};
 
 const onLoadData = () => {
-  ServeGroupDetail({ group_id: props.id }).then(res => {
+  ServeGroupDetail({ group_id: props.id }).then((res) => {
     if (res.code == 200) {
-      modelDetail.name = res.data.group_name
-      modelDetail.avatar = res.data.avatar
-      modelDetail.profile = res.data.profile
+      modelDetail.name = res.data.group_name;
+      modelDetail.avatar = res.data.avatar;
+      modelDetail.profile = res.data.profile;
     }
-  })
-}
+  });
+};
 
 function onSubmitBaseInfo() {
-  if (modelDetail.name.trim() == '') {
-    return window['$message'].info('群名称不能为空')
+  if (modelDetail.name.trim() == "") {
+    return window["$message"].info("群名称不能为空");
   }
 
   ServeEditGroup({
@@ -46,18 +46,18 @@ function onSubmitBaseInfo() {
     group_name: modelDetail.name,
     avatar: modelDetail.avatar,
     profile: modelDetail.profile,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      window['$message'].success('群信息更新成功')
+      window["$message"].success("群信息更新成功");
     } else {
-      window['$message'].error(res.message)
+      window["$message"].error(res.message);
     }
-  })
+  });
 }
 
 onMounted(() => {
-  onLoadData()
-})
+  onLoadData();
+});
 </script>
 <template>
   <section class="section el-container is-vertical height100">
@@ -84,7 +84,7 @@ onMounted(() => {
             :size="60"
             :style="{
               color: 'white',
-              backgroundColor: '#508afe',
+              backgroundColor: '#EE9028',
               fontSize: '18px',
             }"
             >{{ modelDetail.name.substring(0, 1) }}</n-avatar

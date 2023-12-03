@@ -17,57 +17,50 @@ ServeVips({}).then((res) => {
 
 <template>
   <section class="el-container is-vertical height100">
-    <div class="table el-main scroller me-scrollbar me-scrollbar-thumb">
-      <div class="theader">
-        <div>会员等级</div>
-        <div>模型权限</div>
-        <div>免费额度(tokens)</div>
-        <div class="mr20">权益说明</div>
-      </div>
-
-      <div class="row" v-for="item in items" :key="item.level">
-        <div>{{ item.name }}</div>
-        <div>
-          <span class="models" v-for="item in item.models" :key="item">
-            {{ item }}
-          </span>
+    <div class="el-main scroller me-scrollbar me-scrollbar-thumb">
+      <div class="header">IIM 您的专属助手</div>
+      <div class="vip">
+        <div
+          class="vip-item"
+          v-for="item in items"
+          :key="item.level"
+          :style="{ backgroundColor: item.color || '#303033' }"
+        >
+          <div class="name">{{ item.name }}</div>
+          <div class="mt10">权益说明</div>
+          <div class="mt10">{{ item.remark || "-" }}</div>
+          <div class="mt10">满足免费额度 {{ item.free_tokens }}</div>
+          <div class="mt10">
+            <span>模型权限: </span>
+            <span class="models" v-for="item in item.models" :key="item">
+              {{ item }}
+            </span>
+          </div>
         </div>
-        <div>{{ item.free_tokens }}</div>
-        <div class="mr20">{{ item.remark || "-" }}</div>
       </div>
     </div>
   </section>
 </template>
 
 <style lang="less" scoped>
-.table {
-  width: 100%;
-
-  .theader {
-    width: 100%;
-    border-bottom: 1px solid var(--border-color);
-    font-size: 16px;
-  }
-
-  .row {
-    border-bottom: 1px solid var(--border-color);
-  }
-
-  .theader,
-  .row {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-
-    > div {
-      width: 100%;
-      display: block;
-      text-align: center;
-    }
-
-    .models {
-      width: 150px;
-      display: inline-block;
+.header {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 20px;
+}
+.vip {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  .vip-item {
+    height: 260px;
+    width: 360px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    padding: 20px;
+    .name {
+      font-size: 20px;
     }
   }
 }

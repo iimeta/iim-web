@@ -1,16 +1,16 @@
 <script setup>
-import { Male, Female, SendOne } from '@icon-park/vue-next'
+import { Male, Female, SendOne } from "@icon-park/vue-next";
 
-const emit = defineEmits(['to-talk'])
+const emit = defineEmits(["to-talk"]);
 
 defineProps({
   avatar: {
     type: String,
-    default: '',
+    default: "",
   },
   username: {
     type: String,
-    default: '',
+    default: "",
   },
   gender: {
     type: Number,
@@ -18,13 +18,13 @@ defineProps({
   },
   motto: {
     type: String,
-    default: '',
+    default: "",
   },
   flag: {
     type: String,
-    default: '',
+    default: "",
   },
-})
+});
 </script>
 
 <template>
@@ -36,16 +36,16 @@ defineProps({
     <div class="right-item">
       <div class="username">
         <span class="text-ellipsis">
-          {{ username || '-' }}
+          {{ username || "-" }}
         </span>
 
         <div v-if="gender > 0">
-          <n-icon v-if="gender == 1" :component="Male" color="#508afe" />
+          <n-icon v-if="gender == 1" :component="Male" color="#EE9028" />
           <n-icon v-if="gender == 2" :component="Female" color="#ff5722" />
         </div>
       </div>
 
-      <div class="flags text-ellipsis">{{ motto || '...' }}</div>
+      <div class="flags text-ellipsis">{{ motto || "..." }}</div>
 
       <div class="helper">
         <div class="status">{{ flag }}</div>

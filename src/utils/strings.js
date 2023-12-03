@@ -28,7 +28,7 @@ export function hidePhone(phone) {
  * @param {String} text 文本
  * @param {String} color 超链接颜色
  */
-export function textReplaceLink(text, color = '#409eff') {
+export function textReplaceLink(text, color = '#D4A978') {
   let exp =
     /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
   return text.replace(
@@ -43,7 +43,7 @@ export function textReplaceLink(text, color = '#409eff') {
  * @param {String} text 文本
  * @param {String} color 超链接颜色
  */
-export function textReplaceMention(text, color = '#2196F3') {
+export function textReplaceMention(text, color = '#EE9028') {
   return text.replace(new RegExp(/@\S+/, 'g'), ($0, $1) => {
     return `<span style="color:${color};">${$0}</span>`
   })

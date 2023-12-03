@@ -1,27 +1,27 @@
 <script setup>
-import { reactive, computed, onMounted } from 'vue'
-import { NCheckbox, NProgress } from 'naive-ui'
-import { ServeConfirmVoteHandle } from '@/api/chat'
-import { useUserStore } from '@/store/user'
+import { reactive, computed, onMounted } from "vue";
+import { NCheckbox, NProgress } from "naive-ui";
+import { ServeConfirmVoteHandle } from "@/api/chat";
+import { useUserStore } from "@/store/user";
 
 const props = defineProps({
   extra: Object,
   data: Object,
-})
+});
 
-const userStore = useUserStore()
-const mode = props.extra.detail.answer_mode
-const state = reactive({ options: [] })
+const userStore = useUserStore();
+const mode = props.extra.detail.answer_mode;
+const state = reactive({ options: [] });
 
 // 是否可提交
 const isCanSubmit = computed(() => {
-  return state.options.some(item => item.is_checked)
-})
+  return state.options.some((item) => item.is_checked);
+});
 
 // 是否已投票
 const isVoted = computed(() => {
-  return props.extra.vote_users.some(item => item == userStore.uid)
-})
+  return props.extra.vote_users.some((item) => item == userStore.uid);
+});
 
 /**
  * 设置投票选项
@@ -34,7 +34,7 @@ function setOptions(options) {
       is_checked: false,
       num: 0,
       progress: 0,
-    })
+    });
   }
 }
 
@@ -44,15 +44,15 @@ function setOptions(options) {
  * @param {*} data
  */
 function updateStatistics(data) {
-  let count = data.count
+  let count = data.count;
 
-  state.options.forEach(option => {
-    option.num = data.options[option.key]
+  state.options.forEach((option) => {
+    option.num = data.options[option.key];
 
     if (count > 0) {
-      option.progress = Math.round((data.options[option.key] / count) * 100)
+      option.progress = Math.round((data.options[option.key] / count) * 100);
     }
-  })
+  });
 }
 
 /**
@@ -63,40 +63,40 @@ function updateStatistics(data) {
  */
 function change(data, option) {
   if (mode == 0) {
-    state.options.forEach(option => (option.is_checked = false))
+    state.options.forEach((option) => (option.is_checked = false));
   }
 
-  option.is_checked = data
+  option.is_checked = data;
 }
 
 /**
  * 表单提交
  */
 const onSubmit = () => {
-  if (!isCanSubmit.value) return
+  if (!isCanSubmit.value) return;
 
-  let items = []
+  let items = [];
 
-  state.options.forEach(item => {
-    item.is_checked && items.push(item.key)
-  })
+  state.options.forEach((item) => {
+    item.is_checked && items.push(item.key);
+  });
 
   ServeConfirmVoteHandle({
     record_id: props.data.id,
-    options: items.join(','),
-  }).then(res => {
+    options: items.join(","),
+  }).then((res) => {
     if (res.code == 200) {
-      updateStatistics(res.data)
-      props.extra.vote_users.push(userStore.uid)
-      props.extra.detail.answered_num++
+      updateStatistics(res.data);
+      props.extra.vote_users.push(userStore.uid);
+      props.extra.detail.answered_num++;
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
-  setOptions(props.extra.detail.answer_option)
-  updateStatistics(props.extra.statistics)
-})
+  setOptions(props.extra.detail.answer_option);
+  updateStatistics(props.extra.statistics);
+});
 </script>
 
 <template>
@@ -104,7 +104,7 @@ onMounted(() => {
     <div class="vote-from">
       <div class="vheader">
         <p style="font-weight: bold">
-          {{ mode == 1 ? '[多选投票]' : '[单选投票]' }}
+          {{ mode == 1 ? "[多选投票]" : "[单选投票]" }}
         </p>
         <p>{{ extra.detail.title }}</p>
       </div>
@@ -122,7 +122,7 @@ onMounted(() => {
                 :height="5"
                 :show-indicator="false"
                 :percentage="parseInt(option.progress)"
-                color="#1890ff"
+                color="#EE9028"
               />
             </p>
           </div>
@@ -153,7 +153,7 @@ onMounted(() => {
         </div>
         <div class="vfooter">
           <n-button plain round @click="onSubmit">
-            {{ isCanSubmit ? '立即投票' : '请选择进行投票' }}
+            {{ isCanSubmit ? "立即投票" : "请选择进行投票" }}
           </n-button>
         </div>
       </template>
@@ -193,7 +193,7 @@ onMounted(() => {
       }
 
       &::before {
-        content: '投票';
+        content: "投票";
         position: absolute;
         font-size: 60px;
         color: white;
@@ -250,7 +250,7 @@ onMounted(() => {
         padding-left: 15px;
 
         p {
-          border-left: 2px solid #2196f3;
+          border-left: 2px solid #ee9028;
           padding-left: 5px;
         }
       }

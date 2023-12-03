@@ -1,55 +1,55 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { NModal, NInput, NScrollbar, NCheckbox, NTabs, NTab } from 'naive-ui'
-import { Search, Delete } from '@icon-park/vue-next'
-import { ServeGetContacts } from '@/api/contact'
-import { ServeGetGroups } from '@/api/group'
+import { ref, computed } from "vue";
+import { NModal, NInput, NScrollbar, NCheckbox, NTabs, NTab } from "naive-ui";
+import { Search, Delete } from "@icon-park/vue-next";
+import { ServeGetContacts } from "@/api/contact";
+import { ServeGetGroups } from "@/api/group";
 
-const emit = defineEmits(['close', 'on-submit'])
+const emit = defineEmits(["close", "on-submit"]);
 
 interface Item {
-  id: number
-  type: number
-  name: string
-  avatar: string
-  remark: string
-  checked: boolean
-  keyword: string
+  id: number;
+  type: number;
+  name: string;
+  avatar: string;
+  remark: string;
+  checked: boolean;
+  keyword: string;
 }
 
-const tabsIndex = ref<number>(1)
-const isShowBox = ref(true)
-const loading = ref(true)
-const items = ref<Item[]>([])
-const keywords = ref('')
-const loadGroupStatus = ref(false)
+const tabsIndex = ref<number>(1);
+const isShowBox = ref(true);
+const loading = ref(true);
+const items = ref<Item[]>([]);
+const keywords = ref("");
+const loadGroupStatus = ref(false);
 
 const searchFilter = computed(() => {
   return items.value.filter((item: Item) => {
     return (
       tabsIndex.value == item.type && item.keyword.match(keywords.value) != null
-    )
-  })
-})
+    );
+  });
+});
 
 const checkedFilter = computed(() => {
-  return items.value.filter((item: Item) => item.checked)
-})
+  return items.value.filter((item: Item) => item.checked);
+});
 
 const isCanSubmit = computed(() => {
-  return !checkedFilter.value.length
-})
+  return !checkedFilter.value.length;
+});
 
 const onLoad = () => {
-  onLoadContact()
-}
+  onLoadContact();
+};
 
 const onLoadContact = () => {
-  loading.value = true
+  loading.value = true;
   ServeGetContacts()
-    .then(res => {
+    .then((res) => {
       if (res.code == 200) {
-        let list = res.data.items || []
+        let list = res.data.items || [];
 
         items.value = list.map((item: any) => {
           return {
@@ -60,24 +60,24 @@ const onLoadContact = () => {
             keyword: item.remark + item.nickname,
             remark: item.remark,
             checked: false,
-          }
-        })
+          };
+        });
       }
     })
     .finally(() => {
-      loading.value = false
-    })
-}
+      loading.value = false;
+    });
+};
 
 const onLoadGroup = async () => {
   if (loadGroupStatus.value) {
-    return
+    return;
   }
 
-  loading.value = true
-  let { code, data } = await ServeGetGroups()
+  loading.value = true;
+  let { code, data } = await ServeGetGroups();
   if (code != 200) {
-    return
+    return;
   }
 
   let list = data.items.map((item: any) => {
@@ -87,48 +87,50 @@ const onLoadGroup = async () => {
       type: 2,
       name: item.group_name,
       keyword: item.group_name,
-      remark: '',
+      remark: "",
       checked: false,
-    }
-  })
+    };
+  });
 
-  items.value.push(...list)
+  items.value.push(...list);
 
-  loading.value = false
-  loadGroupStatus.value = true
-}
+  loading.value = false;
+  loadGroupStatus.value = true;
+};
 
 const onMaskClick = () => {
-  emit('close')
-}
+  emit("close");
+};
 
 const onTriggerContact = (item: any) => {
-  let data = items.value.find((val: any) => val.id === item.id && val.type === item.type)
+  let data = items.value.find(
+    (val: any) => val.id === item.id && val.type === item.type
+  );
 
   if (data) {
-    data.checked = !data.checked
+    data.checked = !data.checked;
   }
-}
+};
 
 const onSubmit = () => {
   let data = checkedFilter.value.map((item: any) => {
     return {
       id: item.id,
       type: item.type,
-    }
-  })
+    };
+  });
 
-  emit('on-submit', data)
-}
+  emit("on-submit", data);
+};
 
 const onTabs = (value: number) => {
-  tabsIndex.value = value
+  tabsIndex.value = value;
   if (value == 2) {
-    onLoadGroup()
+    onLoadGroup();
   }
-}
+};
 
-onLoad()
+onLoad();
 </script>
 
 <template>
@@ -324,7 +326,7 @@ onLoad()
         font-weight: 400;
         justify-content: flex-start;
         &:hover {
-          color: #409eff;
+          color: #d4a978;
         }
       }
 

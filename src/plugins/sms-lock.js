@@ -38,6 +38,12 @@ class SmsLock {
     this.compute()
   }
 
+  // 结束计时
+  end() {
+    this.callBack(0)
+    localStorage.removeItem(this.lockName)
+  }
+
   compute() {
     this.clear()
 

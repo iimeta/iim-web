@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, computed, reactive, nextTick, inject } from 'vue'
-import { NSpace, NDropdown, NCheckbox } from 'naive-ui'
-import { Search, Plus } from '@icon-park/vue-next'
-import GroupLaunch from '../GroupLaunch.vue'
-import { useUserStore } from '@/store/user'
+import { ref, computed, reactive, nextTick, inject } from "vue";
+import { NSpace, NDropdown, NCheckbox } from "naive-ui";
+import { Search, Plus } from "@icon-park/vue-next";
+import GroupLaunch from "../GroupLaunch.vue";
+import { useUserStore } from "@/store/user";
 
 import {
   ServeGetGroupMembers,
@@ -11,44 +11,44 @@ import {
   ServeGroupAssignAdmin,
   ServeGroupHandover,
   ServeGroupNoSpeak,
-} from '@/api/group'
+} from "@/api/group";
 
 const props = defineProps({
   id: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const user: any = inject('$user')
-const userStore = useUserStore()
-const isGroupLaunch = ref(false)
-const keywords = ref('')
-const batchDelete = ref(false)
-const items = ref([])
+const user: any = inject("$user");
+const userStore = useUserStore();
+const isGroupLaunch = ref(false);
+const keywords = ref("");
+const batchDelete = ref(false);
+const items = ref([]);
 
 const filterCheck = computed(() => {
-  return items.value.filter((item: any) => item.is_delete)
-})
+  return items.value.filter((item: any) => item.is_delete);
+});
 
 const filterSearch = computed(() => {
   if (!keywords.value.length) {
-    return items.value
+    return items.value;
   }
 
   return items.value.filter((item: any) => {
     return (
       item.nickname.match(keywords.value) != null ||
       item.user_card.match(keywords.value) != null
-    )
-  })
-})
+    );
+  });
+});
 
 const isAdmin = computed(() => {
   return items.value.some((item: any) => {
-    return item.user_id == userStore.uid && item.leader == 2
-  })
-})
+    return item.user_id == userStore.uid && item.leader == 2;
+  });
+});
 
 const dropdown = reactive({
   options: [],
@@ -56,219 +56,219 @@ const dropdown = reactive({
   dropdownX: 0,
   dropdownY: 0,
   item: {},
-})
+});
 
 const onLoadData = () => {
   ServeGetGroupMembers({
     group_id: props.id,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      let data = res.data.items || []
+      let data = res.data.items || [];
 
-      data.forEach(item => {
-        item.is_delete = false
-      })
+      data.forEach((item) => {
+        item.is_delete = false;
+      });
 
-      items.value = data
+      items.value = data;
     }
-  })
-}
+  });
+};
 
-const onDelete = item => {
-  let title = `删除 [${item.nickname}] 群成员？`
+const onDelete = (item) => {
+  let title = `删除 [${item.nickname}] 群成员？`;
 
-  window['$dialog'].create({
-    title: '温馨提示',
+  window["$dialog"].create({
+    title: "温馨提示",
     content: title,
-    positiveText: '确定',
-    negativeText: '取消',
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
       ServeRemoveMembersGroup({
         group_id: props.id,
         members_ids: `${item.user_id}`,
-      }).then(res => {
+      }).then((res) => {
         if (res.code == 200) {
-          onLoadData()
-          window['$message'].success('删除成功')
+          onLoadData();
+          window["$message"].success("删除成功");
         }
-      })
+      });
     },
-  })
-}
+  });
+};
 
 const onBatchDelete = () => {
   if (!filterCheck.value.length) {
-    return
+    return;
   }
 
-  window['$dialog'].create({
-    title: '温馨提示',
+  window["$dialog"].create({
+    title: "温馨提示",
     content: `批量删除群成员？`,
-    positiveText: '确定',
-    negativeText: '取消',
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
       ServeRemoveMembersGroup({
         group_id: props.id,
         members_ids: filterCheck.value
           .map((item: any) => item.user_id)
-          .join(','),
-      }).then(res => {
+          .join(","),
+      }).then((res) => {
         if (res.code == 200) {
-          batchDelete.value = false
-          onLoadData()
-          window['$message'].success('删除成功')
+          batchDelete.value = false;
+          onLoadData();
+          window["$message"].success("删除成功");
         }
-      })
+      });
     },
-  })
-}
+  });
+};
 
 const onRowClick = (item: any) => {
   if (batchDelete.value == true) {
     if (item.leader < 2) {
-      item.is_delete = !item.is_delete
+      item.is_delete = !item.is_delete;
     }
   } else {
-    user(item.user_id)
+    user(item.user_id);
   }
-}
+};
 
 const onCancelDelete = () => {
   items.value.forEach((item: any) => {
-    item.is_delete = false
-  })
+    item.is_delete = false;
+  });
 
-  batchDelete.value = false
-}
+  batchDelete.value = false;
+};
 
 const onUserInfo = (item: any) => {
-  user(item.user_id)
-}
+  user(item.user_id);
+};
 
 const onAssignAdmin = (item: any) => {
   let title =
     item.leader == 0
       ? `确定要给 [${item.nickname}] 分配管理员权限吗？`
-      : `确定解除 [${item.nickname}] 管理员权限吗？`
+      : `确定解除 [${item.nickname}] 管理员权限吗？`;
 
-  window['$dialog'].create({
-    title: '温馨提示',
+  window["$dialog"].create({
+    title: "温馨提示",
     content: title,
-    positiveText: '确定',
-    negativeText: '取消',
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
       ServeGroupAssignAdmin({
         mode: item.leader == 0 ? 1 : 2,
         group_id: props.id,
         user_id: parseInt(item.user_id),
-      }).then(res => {
+      }).then((res) => {
         if (res.code == 200) {
-          window['$message'].success('操作成功')
-          onLoadData()
+          window["$message"].success("操作成功");
+          onLoadData();
         } else {
-          window['$message'].error(res.message)
+          window["$message"].error(res.message);
         }
-      })
+      });
     },
-  })
-}
+  });
+};
 
-const onTransfer = item => {
-  window['$dialog'].create({
-    title: '温馨提示',
+const onTransfer = (item) => {
+  window["$dialog"].create({
+    title: "温馨提示",
     content: `确定把群主权限转交给 [${item.nickname}] ？`,
-    positiveText: '确定',
-    negativeText: '取消',
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
       ServeGroupHandover({
         group_id: props.id,
         user_id: parseInt(item.user_id),
-      }).then(res => {
+      }).then((res) => {
         if (res.code == 200) {
-          window['$message'].success('操作成功')
-          onLoadData()
+          window["$message"].success("操作成功");
+          onLoadData();
         } else {
-          window['$message'].error(res.message)
+          window["$message"].error(res.message);
         }
-      })
+      });
     },
-  })
-}
+  });
+};
 
 const onForbidden = (item: any) => {
-  let content = `确定要禁言 [${item.nickname}] 此用户吗？`
+  let content = `确定要禁言 [${item.nickname}] 此用户吗？`;
 
   if (item.is_mute === 1) {
-    content = `确定要解除 [${item.nickname}] 此用户的禁言吗？`
+    content = `确定要解除 [${item.nickname}] 此用户的禁言吗？`;
   }
 
-  window['$dialog'].create({
-    title: '温馨提示',
+  window["$dialog"].create({
+    title: "温馨提示",
     content: content,
-    positiveText: '确定',
-    negativeText: '取消',
+    positiveText: "确定",
+    negativeText: "取消",
     onPositiveClick: () => {
       ServeGroupNoSpeak({
         mode: item.is_mute == 0 ? 1 : 2,
         group_id: props.id,
         user_id: parseInt(item.user_id),
-      }).then(res => {
+      }).then((res) => {
         if (res.code == 200) {
-          window['$message'].success('操作成功')
-          onLoadData()
+          window["$message"].success("操作成功");
+          onLoadData();
         } else {
-          window['$message'].error(res.message)
+          window["$message"].error(res.message);
         }
-      })
+      });
     },
-  })
-}
+  });
+};
 
 // 会话列表右键显示菜单
 const onContextMenu = (e: any, item: any) => {
   if (batchDelete.value == true || item.leader == 2) {
-    return
+    return;
   }
 
-  dropdown.show = false
-  dropdown.item = Object.assign({}, item)
+  dropdown.show = false;
+  dropdown.item = Object.assign({}, item);
   dropdown.options = [
     {
-      label: '查看成员',
-      key: 'info',
+      label: "查看成员",
+      key: "info",
     },
     {
-      label: item.is_mute ? '解除禁言' : '禁止发言',
-      key: 'forbidden',
+      label: item.is_mute ? "解除禁言" : "禁止发言",
+      key: "forbidden",
     },
     {
-      label: '删除成员',
-      key: 'delete',
+      label: "删除成员",
+      key: "delete",
     },
     {
-      label: '批量删除',
-      key: 'batch_delete',
+      label: "批量删除",
+      key: "batch_delete",
     },
-  ]
+  ];
 
   if (isAdmin.value) {
-    dropdown.options.push({ label: '转让群主', key: 'transfer' })
+    dropdown.options.push({ label: "转让群主", key: "transfer" });
 
     if (item.leader == 1) {
-      dropdown.options.push({ label: '管理权限(解除)', key: 'assignment' })
+      dropdown.options.push({ label: "管理权限(解除)", key: "assignment" });
     } else if (item.leader == 0) {
-      dropdown.options.push({ label: '管理权限(分配)', key: 'assignment' })
+      dropdown.options.push({ label: "管理权限(分配)", key: "assignment" });
     }
   }
 
   nextTick(() => {
-    dropdown.show = true
-    dropdown.dropdownX = e.clientX
-    dropdown.dropdownY = e.clientY
-  })
+    dropdown.show = true;
+    dropdown.dropdownX = e.clientX;
+    dropdown.dropdownY = e.clientY;
+  });
 
-  e.preventDefault()
-}
+  e.preventDefault();
+};
 
 const onContextMenuHandle = (key: string) => {
   // 注册回调事件
@@ -279,15 +279,15 @@ const onContextMenuHandle = (key: string) => {
     forbidden: onForbidden,
     delete: onDelete,
     batch_delete: (data: any) => {
-      batchDelete.value = true
+      batchDelete.value = true;
     },
-  }
+  };
 
-  dropdown.show = false
-  evnets[key] && evnets[key](dropdown.item)
-}
+  dropdown.show = false;
+  evnets[key] && evnets[key](dropdown.item);
+};
 
-onLoadData()
+onLoadData();
 </script>
 <template>
   <section class="el-container is-vertical height100">
@@ -330,7 +330,11 @@ onLoadData()
         v-for="member in filterSearch"
         :key="member.user_id"
       >
-        <div class="tool flex-center" v-show="batchDelete" @click="onRowClick(member)">
+        <div
+          class="tool flex-center"
+          v-show="batchDelete"
+          @click="onRowClick(member)"
+        >
           <n-checkbox
             :disabled="member.leader === 2"
             size="small"
@@ -351,7 +355,7 @@ onLoadData()
         >
           <div class="item-title">
             <p class="nickname text-ellipsis">
-              <span>{{ member.nickname || '未设置昵称' }}</span>
+              <span>{{ member.nickname || "未设置昵称" }}</span>
               <span v-show="member.user_card"> ({{ member.user_card }})</span>
             </p>
             <p>
@@ -397,8 +401,8 @@ onLoadData()
     @select="onContextMenuHandle"
     @clickoutside="
       () => {
-        dropdown.show = false
-        dropdown.item = {}
+        dropdown.show = false;
+        dropdown.item = {};
       }
     "
   />
@@ -472,7 +476,7 @@ onLoadData()
 
   &:hover {
     .item-title {
-      color: #2196f3;
+      color: #ee9028;
     }
   }
 
@@ -509,7 +513,7 @@ onLoadData()
   }
 
   &.qiye {
-    background-color: #2196f3;
+    background-color: #ee9028;
     color: #ffffff;
   }
 
@@ -519,7 +523,7 @@ onLoadData()
   }
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   .badge {
     &.muted {
       background-color: #777782;

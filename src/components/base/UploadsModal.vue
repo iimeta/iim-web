@@ -1,16 +1,16 @@
 <script setup>
-import { NProgress } from 'naive-ui'
-import { useUploadsStore } from '@/store/uploads'
-import { fileFormatSize } from '@/utils/strings'
+import { NProgress } from "naive-ui";
+import { useUploadsStore } from "@/store/uploads";
+import { fileFormatSize } from "@/utils/strings";
 
-const uploadsStore = useUploadsStore()
+const uploadsStore = useUploadsStore();
 
 const statusItem = {
-  0: '等待上传',
-  1: '上传中',
-  2: '上传完成',
-  3: '网络异常',
-}
+  0: "等待上传",
+  1: "上传中",
+  2: "上传完成",
+  3: "网络异常",
+};
 </script>
 
 <template>
@@ -54,7 +54,7 @@ const statusItem = {
             名称：<span>{{ item.file.name }}</span>
           </p>
           <p>
-            类型：<span>{{ item.file.type || 'text' }}</span>
+            类型：<span>{{ item.file.type || "text" }}</span>
           </p>
           <p>
             大小：<span>{{ fileFormatSize(item.file.size) }}</span>
@@ -99,7 +99,7 @@ const statusItem = {
       .type-icon {
         height: 30px;
         width: 30px;
-        background-color: rgb(80, 138, 254);
+        background-color: #ee9028;
         border-radius: 50%;
         margin-left: 5px;
         font-size: 10px;

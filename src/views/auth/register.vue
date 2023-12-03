@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import { NForm, NFormItem, NInput } from "naive-ui";
+import { NForm, NFormItem, NInput, NConfigProvider } from "naive-ui";
 import { ServeRegister } from "@/api/auth";
 import { ServeSendVerifyCode, ServeSendEmailCode } from "@/api/common";
 import SmsLock from "@/plugins/sms-lock";
@@ -111,11 +111,11 @@ const onSendSms = () => {
     channel: "register",
   });
 
+  lock.start();
+
   response.then((res) => {
     if (res.code == 200) {
-      lock.start();
       window["$message"].success("验证码发送成功");
-
       if (res.data.is_debug) {
         model.code = res.data.code;
         setTimeout(() => {
@@ -124,6 +124,7 @@ const onSendSms = () => {
       }
     } else {
       window["$message"].warning(res.message);
+      lock.end();
     }
   });
 
@@ -144,11 +145,11 @@ const onSendEmail = () => {
     channel: "register",
   });
 
+  lock.start();
+
   response.then((res) => {
     if (res.code == 200) {
-      lock.start();
       window["$message"].success("验证码发送成功");
-
       if (res.data.is_debug) {
         model.code = res.data.code;
         setTimeout(() => {
@@ -157,6 +158,7 @@ const onSendEmail = () => {
       }
     } else {
       window["$message"].warning(res.message);
+      lock.end();
     }
   });
 
@@ -171,11 +173,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="el-container is-vertical login-box reister">
-    <header class="el-header box-header">注册</header>
+  <n-config-provider :theme="null">
+    <section class="el-container is-vertical login-box reister">
+      <header class="el-header box-header">
+        <i class="login-box-logo" />
+        欢迎注册 IIM
+      </header>
 
-    <main class="el-main" style="padding: 3px">
-      <!-- <n-form ref="formRef" size="large" :model="model" :rules="rules">
+      <main class="el-main" style="padding: 3px">
+        <!-- <n-form ref="formRef" size="large" :model="model" :rules="rules">
         <n-form-item path="username" :show-label="false">
           <n-input
             placeholder="请输入手机号"
@@ -233,73 +239,74 @@ onUnmounted(() => {
         </n-button>
       </n-form> -->
 
-      <n-form ref="formRef" size="large" :model="model" :rules="rules">
-        <n-form-item path="username" :show-label="false">
-          <n-input
-            placeholder="请输入邮箱"
-            v-model:value="model.username"
-            @keydown.enter.native="onValidate"
-          />
-        </n-form-item>
+        <n-form ref="formRef" size="large" :model="model" :rules="rules">
+          <n-form-item path="username" :show-label="false">
+            <n-input
+              placeholder="请输入邮箱"
+              v-model:value="model.username"
+              @keydown.enter.native="onValidate"
+            />
+          </n-form-item>
 
-        <n-form-item path="code" :show-label="false">
-          <n-input
-            placeholder="验证码"
-            v-model:value="model.code"
-            :maxlength="6"
-            @keydown.enter.native="onValidate"
-          />
+          <n-form-item path="code" :show-label="false">
+            <n-input
+              placeholder="验证码"
+              v-model:value="model.code"
+              :maxlength="6"
+              @keydown.enter.native="onValidate"
+            />
+            <n-button
+              tertiary
+              class="mt-l5"
+              @click="onSendEmail"
+              :disabled="lockTime > 0"
+            >
+              获取验证码 <span v-show="lockTime > 0">({{ lockTime }}s)</span>
+            </n-button>
+          </n-form-item>
+
+          <n-form-item path="nickname" :show-label="false">
+            <n-input
+              placeholder="设置昵称"
+              v-model:value="model.nickname"
+              :maxlength="20"
+              @keydown.enter.native="onValidate"
+            />
+          </n-form-item>
+
+          <n-form-item path="password" :show-label="false">
+            <n-input
+              placeholder="设置密码"
+              type="password"
+              show-password-on="click"
+              v-model:value="model.password"
+              @keydown.enter.native="onValidate"
+            />
+          </n-form-item>
+
           <n-button
-            tertiary
-            class="mt-l5"
-            @click="onSendEmail"
-            :disabled="lockTime > 0"
+            type="primary"
+            size="large"
+            block
+            class="mt-t20"
+            @click="onValidate"
+            :loading="model.loading"
           >
-            获取验证码 <span v-show="lockTime > 0">({{ lockTime }}s)</span>
+            立即注册
           </n-button>
-        </n-form-item>
+        </n-form>
 
-        <n-form-item path="nickname" :show-label="false">
-          <n-input
-            placeholder="设置昵称"
-            v-model:value="model.nickname"
-            :maxlength="20"
-            @keydown.enter.native="onValidate"
-          />
-        </n-form-item>
-
-        <n-form-item path="password" :show-label="false">
-          <n-input
-            placeholder="设置密码"
-            type="password"
-            show-password-on="click"
-            v-model:value="model.password"
-            @keydown.enter.native="onValidate"
-          />
-        </n-form-item>
-
-        <n-button
-          type="primary"
-          size="large"
-          block
-          class="mt-t20"
-          @click="onValidate"
-          :loading="model.loading"
-        >
-          立即注册
-        </n-button>
-      </n-form>
-
-      <div class="helper">
-        <n-button text color="#409eff" @click="router.push('/auth/forget')">
-          找回密码
-        </n-button>
-        <n-button text color="#409eff" @click="router.push('/auth/login')">
-          已有账号，立即登录?
-        </n-button>
-      </div>
-    </main>
-  </section>
+        <div class="helper">
+          <n-button text color="#D4A978" @click="router.push('/auth/forget')">
+            找回密码
+          </n-button>
+          <n-button text color="#D4A978" @click="router.push('/auth/login')">
+            已有账号，立即登录?
+          </n-button>
+        </div>
+      </main>
+    </section>
+  </n-config-provider>
 </template>
 
 <style lang="less" scoped>

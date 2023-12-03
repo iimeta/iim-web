@@ -228,7 +228,7 @@ const onSearchInput = debounce((e) => {
       font-weight: bold;
     }
 
-    border-left: 4px solid #2196f3;
+    border-left: 4px solid #ee9028;
   }
 }
 

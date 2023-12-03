@@ -50,11 +50,6 @@ const menus = reactive([
     icon: NotebookAndPen,
     title: "笔记",
   },
-  {
-    link: "/settings/detail",
-    icon: SettingTwo,
-    title: "设置",
-  },
 ]);
 
 const menusFooter = reactive([
@@ -62,6 +57,11 @@ const menusFooter = reactive([
     link: "/vip/info",
     icon: VipOne,
     title: "会员",
+  },
+  {
+    link: "/settings/detail",
+    icon: SettingTwo,
+    title: "设置",
   },
 ]);
 
@@ -120,7 +120,7 @@ const onClickMenu = (menu) => {
           <component
             :is="nav.icon"
             :theme="i == index ? 'filled' : 'outline'"
-            :fill="i == index ? '#1890ff' : color"
+            :fill="i == index ? '#EE9028' : color"
             :strokeWidth="2"
             :size="22"
           />
@@ -136,48 +136,21 @@ const onClickMenu = (menu) => {
         v-for="(nav, j) in menusFooter"
         :key="nav.link"
         :class="{
-          active: 4 == index,
+          active: j+menus.length == index,
         }"
         @click="onClickMenu(nav)"
       >
         <p>
           <component
             :is="nav.icon"
-            :theme="4 == index ? 'filled' : 'outline'"
-            :fill="4 == index ? '#1890ff' : color"
+            :theme="j+menus.length == index ? 'filled' : 'outline'"
+            :fill="j+menus.length == index ? '#EE9028' : color"
             :strokeWidth="2"
             :size="22"
           />
         </p>
 
         <span>{{ nav.title }}</span>
-      </div>
-
-      <div>
-        <a
-          class="pointer"
-          href="https://github.com/iimeta/iim-api"
-          target="_blank"
-        >
-          <Api theme="outline" size="22" :fill="color" :strokeWidth="2" />
-          <br />
-          <span class="api">API</span>
-        </a>
-      </div>
-
-      <div>
-        <a
-          class="pointer"
-          href="https://github.com/iimeta/iim-client"
-          target="_blank"
-        >
-          <github-one
-            theme="outline"
-            size="22"
-            :fill="color"
-            :strokeWidth="2"
-          />
-        </a>
       </div>
       <div @click="onLogout" class="pointer">退出</div>
     </footer>

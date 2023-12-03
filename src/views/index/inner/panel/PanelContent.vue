@@ -391,7 +391,7 @@ const onReload = () => {
 const onRowClick = (item: IMessageRecord) => {
   // if (dialogueStore.isOpenMultiSelect) {
   //   if (ForwardableMessageType.includes(item.msg_type)) {
-      item.isCheck = !item.isCheck;
+  item.isCheck = !item.isCheck;
   //   } else {
   //     window["$message"].info("此类消息不支持转发");
   //   }
@@ -484,7 +484,11 @@ onMounted(onReload);
 
             <!-- 主体信息 -->
             <main class="main-column">
-              <div class="talk-title" :class="{ pointer: dialogueStore.isOpenMultiSelect }" @click="onRowClick(item)">
+              <div
+                class="talk-title"
+                :class="{ pointer: dialogueStore.isOpenMultiSelect }"
+                @click="onRowClick(item)"
+              >
                 <span
                   class="nickname pointer"
                   v-show="talk_type == 2 && item.float == 'left'"
@@ -593,7 +597,7 @@ onMounted(onReload);
 
   .load-toolbar {
     height: 38px;
-    color: #409eff;
+    color: #d4a978;
     text-align: center;
     line-height: 38px;
     font-size: 13px;

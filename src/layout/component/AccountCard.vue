@@ -7,14 +7,21 @@ const store = useUserStore();
 <template>
   <section class="account-card">
     <div class="card-header">
-      <im-avatar round class="avatar" :size="100" :src="store.avatar" :username="store.nickname" :fontSize="70"/>
+      <im-avatar
+        round
+        class="avatar"
+        :size="100"
+        :src="store.avatar"
+        :username="store.nickname"
+        :fontSize="70"
+      />
 
       <div class="nickname text-ellipsis">
         {{ store.nickname || "未设置昵称" }}
       </div>
 
       <div class="gender" v-show="store.gender > 0">
-        <n-icon v-if="store.gender == 1" :component="Male" color="#508afe" />
+        <n-icon v-if="store.gender == 1" :component="Male" color="#EE9028" />
         <n-icon v-if="store.gender == 2" :component="Female" color="#ff5722" />
       </div>
     </div>

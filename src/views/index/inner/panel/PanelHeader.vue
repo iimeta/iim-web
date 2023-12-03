@@ -4,8 +4,8 @@ import {
   Announcement,
   MenuUnfoldOne,
   MenuFoldOne,
-} from '@icon-park/vue-next'
-import { useDialogueStore } from '@/store/dialogue'
+} from "@icon-park/vue-next";
+import { useDialogueStore } from "@/store/dialogue";
 
 defineProps({
   type: {
@@ -14,7 +14,7 @@ defineProps({
   },
   username: {
     type: String,
-    default: '',
+    default: "",
   },
   online: {
     type: Boolean,
@@ -28,14 +28,14 @@ defineProps({
     type: Number,
     default: 0,
   },
-})
+});
 
-const dialogueStore = useDialogueStore()
-const emit = defineEmits(['evnet'])
+const dialogueStore = useDialogueStore();
+const emit = defineEmits(["evnet"]);
 
 const onSetMenu = () => {
-  dialogueStore.isShowSessionList = !dialogueStore.isShowSessionList
-}
+  dialogueStore.isShowSessionList = !dialogueStore.isShowSessionList;
+};
 </script>
 
 <template>
@@ -51,7 +51,7 @@ const onSetMenu = () => {
 
     <div class="module left-module">
       <span class="tag" :class="{ red: type == 1 }">
-        {{ type == 1 ? '好友' : '群聊' }}
+        {{ type == 1 ? "好友" : "群聊" }}
       </span>
       <span class="nickname">{{ username }}</span>
       <span class="num" v-show="type == 2 && num">({{ num }})</span>
@@ -60,7 +60,7 @@ const onSetMenu = () => {
     <div class="module center-module" v-if="type == 1">
       <p class="online">
         <span class="online-status" v-show="online"></span>
-        <span>{{ online ? '在线' : '离线' }}</span>
+        <span>{{ online ? "在线" : "离线" }}</span>
       </p>
       <p class="keyboard-status" v-show="keyboard">对方正在输入 ...</p>
     </div>
@@ -152,7 +152,7 @@ const onSetMenu = () => {
       text-align: center;
 
       &.color {
-        color: #1890ff;
+        color: #ee9028;
       }
 
       .online-status {
@@ -164,7 +164,7 @@ const onSetMenu = () => {
         vertical-align: middle;
         border-radius: 50%;
         position: relative;
-        background-color: #1890ff;
+        background-color: #ee9028;
         margin-right: 5px;
 
         &:after {
@@ -173,11 +173,11 @@ const onSetMenu = () => {
           left: -1px;
           width: 100%;
           height: 100%;
-          border: 1px solid #1890ff;
+          border: 1px solid #ee9028;
           border-radius: 50%;
           -webkit-animation: antStatusProcessing 1.2s ease-in-out infinite;
           animation: antStatusProcessing 1.2s ease-in-out infinite;
-          content: '';
+          content: "";
         }
       }
     }

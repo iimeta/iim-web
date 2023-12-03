@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed } from "vue";
 import {
   NModal,
   NInput,
@@ -8,133 +8,133 @@ import {
   NCheckbox,
   NForm,
   NFormItem,
-} from 'naive-ui'
-import { Search, Delete } from '@icon-park/vue-next'
+} from "naive-ui";
+import { Search, Delete } from "@icon-park/vue-next";
 import {
   ServeCreateGroup,
   ServeInviteGroup,
   ServeGetInviteFriends,
-} from '@/api/group'
+} from "@/api/group";
 
-const emit = defineEmits(['close', 'on-submit'])
+const emit = defineEmits(["close", "on-submit"]);
 const props = defineProps({
   gid: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const items = ref([])
+const items = ref([]);
 const model = reactive({
-  keywords: '',
-  name: '',
-})
+  keywords: "",
+  name: "",
+});
 
-const loading = ref(true)
-const isShowBox = ref(true)
+const loading = ref(true);
+const isShowBox = ref(true);
 
 const searchFilter = computed(() => {
   if (model.keywords) {
-    return items.value.filter(item => {
-      return item.nickname.match(model.keywords) != null
-    })
+    return items.value.filter((item) => {
+      return item.nickname.match(model.keywords) != null;
+    });
   }
 
-  return items.value
-})
+  return items.value;
+});
 
 const checkedFilter = computed(() => {
-  return items.value.filter(item => item.checked)
-})
+  return items.value.filter((item) => item.checked);
+});
 
 const isCanSubmit = computed(() => {
   if (props.gid > 0) {
-    return !checkedFilter.value.length
+    return !checkedFilter.value.length;
   }
 
-  return !(model.name.trim() && checkedFilter.value.length)
-})
+  return !(model.name.trim() && checkedFilter.value.length);
+});
 
 const onReset = () => {
-  model.name = ''
-  items.value.forEach(item => {
-    item.checked = false
-  })
-}
+  model.name = "";
+  items.value.forEach((item) => {
+    item.checked = false;
+  });
+};
 
 const onLoad = () => {
   ServeGetInviteFriends({
     group_id: props.gid,
   })
-    .then(res => {
+    .then((res) => {
       if (res.code == 200 && res.data) {
-        let list = res.data.items || []
+        let list = res.data.items || [];
 
-        items.value = list.map(item => {
+        items.value = list.map((item) => {
           return Object.assign(item, {
             nickname: item.friend_remark ? item.friend_remark : item.nickname,
             checked: false,
-          })
-        })
+          });
+        });
       }
     })
     .finally(() => {
-      loading.value = false
-    })
-}
+      loading.value = false;
+    });
+};
 
 const onMaskClick = () => {
-  emit('close')
-}
+  emit("close");
+};
 
-const onTriggerContact = item => {
-  let data = items.value.find(val => {
-    return val.id === item.id
-  })
+const onTriggerContact = (item) => {
+  let data = items.value.find((val) => {
+    return val.id === item.id;
+  });
 
-  data && (data.checked = !data.checked)
-}
+  data && (data.checked = !data.checked);
+};
 
-const onCreateSubmit = ids => {
+const onCreateSubmit = (ids) => {
   ServeCreateGroup({
-    avatar: '',
+    avatar: "",
     name: model.name,
-    profile: '',
-    ids: ids.join(','),
-  }).then(res => {
+    profile: "",
+    ids: ids.join(","),
+  }).then((res) => {
     if (res.code == 200) {
-      onReset()
-      emit('on-submit', res.data)
-      window['$message'].success('创建成功')
-      isShowBox.value = false
+      onReset();
+      emit("on-submit", res.data);
+      window["$message"].success("创建成功");
+      isShowBox.value = false;
     }
-  })
-}
+  });
+};
 
-const onInviteSubmit = ids => {
+const onInviteSubmit = (ids) => {
   ServeInviteGroup({
     group_id: props.gid,
-    ids: ids.join(','),
-  }).then(res => {
+    ids: ids.join(","),
+  }).then((res) => {
     if (res.code == 200) {
-      emit('on-invite')
-      window['$message'].success('邀请成功')
-      isShowBox.value = false
+      emit("on-invite");
+      window["$message"].success("邀请成功");
+      isShowBox.value = false;
     }
-  })
-}
+  });
+};
 
 const onSubmit = () => {
-  let ids = checkedFilter.value.map(item => item.id)
+  let ids = checkedFilter.value.map((item) => item.id);
 
   if (props.gid == 0) {
-    onCreateSubmit(ids)
+    onCreateSubmit(ids);
   } else {
-    onInviteSubmit(ids)
+    onInviteSubmit(ids);
   }
-}
+};
 
-onLoad()
+onLoad();
 </script>
 
 <template>
@@ -319,7 +319,7 @@ onLoad()
         font-weight: 400;
         justify-content: flex-start;
         &:hover {
-          color: #409eff;
+          color: #d4a978;
         }
       }
 

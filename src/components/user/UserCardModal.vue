@@ -185,7 +185,7 @@ const onAfterEnter = () => {
             <n-icon
               v-if="state.gender == 1"
               :component="Male"
-              color="#508afe"
+              color="#EE9028"
             />
             <n-icon
               v-if="state.gender == 2"

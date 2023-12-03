@@ -132,7 +132,7 @@ const onActive = (item) => {
       box-sizing: border-box;
       white-space: nowrap;
       margin: 3px;
-      color: #409eff;
+      color: #d4a978;
       background: rgba(64, 158, 255, 0.1);
       border-radius: 3px;
 

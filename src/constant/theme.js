@@ -1,11 +1,10 @@
 // 主题配置
 export const overrides = {
   common: {
-    primaryColor: '#1890ff',
-    // primaryColor: '#4a72ef',
-    primaryColorHover: '#1890ff',
-    primaryColorPressed: '#1890ff',
-    primaryColorSuppl: '#1890ff',
+    primaryColor: '#EE9028',
+    primaryColorHover: '#EE9028',
+    primaryColorPressed: '#EE9028',
+    primaryColorSuppl: '#EE9028',
     bodyColor: '#ffffff',
   },
 

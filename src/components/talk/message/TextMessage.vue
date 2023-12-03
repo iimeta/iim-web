@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { textReplaceEmoji } from '@/utils/emojis'
-import { textReplaceLink, textReplaceMention } from '@/utils/strings'
-import { Data } from './types.d'
+import { textReplaceEmoji } from "@/utils/emojis";
+import { textReplaceLink, textReplaceMention } from "@/utils/strings";
+import { Data } from "./types.d";
 
 const props = defineProps<{
-  extra: any
-  data: Data
-  maxWidth: Boolean
-}>()
+  extra: any;
+  data: Data;
+  maxWidth: Boolean;
+}>();
 
-const float = props.data.float
+const float = props.data.float;
 
-let textContent = props.data.content
+let textContent = props.data.content;
 
-textContent = textReplaceLink(textContent)
-textContent = textReplaceMention(textContent, '#1890ff')
-textContent = textReplaceEmoji(textContent)
+textContent = textReplaceLink(textContent);
+textContent = textReplaceMention(textContent, "#EE9028");
+textContent = textReplaceEmoji(textContent);
 </script>
 
 <template>
@@ -57,7 +57,7 @@ textContent = textReplaceEmoji(textContent)
     word-wrap: break-word;
     font-size: 14px;
     padding: 3px 5px;
-    font-family: 'PingFang SC', 'Microsoft YaHei', 'Alibaba PuHuiTi 2.0 45';
+    font-family: "PingFang SC", "Microsoft YaHei", "Alibaba PuHuiTi 2.0 45";
     line-height: 25px;
 
     :deep(.emoji) {
@@ -66,7 +66,7 @@ textContent = textReplaceEmoji(textContent)
     }
 
     :deep(a) {
-      color: #2196f3;
+      color: #ee9028;
       text-decoration: revert;
     }
   }

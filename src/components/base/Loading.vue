@@ -40,11 +40,11 @@
   font-variant: tabular-nums;
   line-height: 1.5715;
   list-style: none;
-  -webkit-font-feature-settings: 'tnum';
-  font-feature-settings: 'tnum';
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
   position: absolute;
   display: none;
-  color: #1890ff;
+  color: #ee9028;
   text-align: center;
   vertical-align: middle;
   opacity: 0;
@@ -140,7 +140,7 @@
   opacity: 0;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
-  content: '';
+  content: "";
   pointer-events: none;
 }
 
@@ -177,7 +177,7 @@
   display: block;
   width: 9px;
   height: 9px;
-  background-color: #1890ff;
+  background-color: #ee9028;
   border-radius: 100%;
   -webkit-transform: scale(0.75);
   transform: scale(0.75);

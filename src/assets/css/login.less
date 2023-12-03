@@ -4,7 +4,7 @@
   height: 38px;
   font-size: 34px;
   font-family: Times New Roman, Georgia, Serif;
-  color: #2196f3;
+  color: #EE9028;
   top: 20px;
   left: 50px;
 }
@@ -23,15 +23,23 @@
   left: 128px;
 }
 
-html[data-theme="dark"] {
-  .logo-name {
-    color: #fff;
-  }
+.slogan1 {
+  font-size: 50px;
+  position: fixed;
+  top: 38%;
+  left: 10%;
+}
+
+.slogan2 {
+  font-size: 50px;
+  position: fixed;
+  top: 50%;
+  left: 10%;
 }
 
 .copyright {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 0;
   right: 0;
   width: 70%;
@@ -46,34 +54,46 @@ html[data-theme="dark"] {
   }
 }
 
+
 .login-box {
   position: fixed;
-  width: 350px;
+  width: 400px;
   min-height: 300px;
   top: 50%;
-  left: 50%;
+  left: 75%;
   transform: translate(-50%, -50%);
-  border-radius: 10px;
-  border: 1px solid #e8e8e8;
+  background-color: #fff;
   padding: 10px 20px;
-
+  color: #D4A978;
+  border: 1px solid #D4A978;
+  
   &.forget,
   &.login {
-    height: 360px;
+    height: 560px;
+    color: #D4A978;
   }
   &.reister {
-    height: 485px;
+    height: 560px;
   }
   &.forget {
-    height: 420px;
+    height: 560px;
+  }
+
+  .login-box-logo {
+    background-image: url('../../src/assets/image/login-box-logo.png');
+    width: 52px;
+    height: 29px;
+    display: block;
+    margin-left: 153px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   
   .box-header {
-    height: 38px;
+    height: 100px;
     font-size: 22px;
     line-height: 38px;
     margin: 20px 0;
-    display: flex;
   }
 
   .helper {
@@ -104,70 +124,6 @@ html[data-theme="dark"] {
   }
 }
 
-.fly-box {
-  .fly {
-    pointer-events: none;
-    position: fixed;
-    z-index: 100;
-  }
-
-  .bg-fly-circle1 {
-    left: 40px;
-    top: 100px;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(
-      to right,
-      rgba(100, 84, 239, 0.07) 0%,
-      rgba(48, 33, 236, 0.04) 100%
-    );
-    animation: move 2.5s linear infinite;
-  }
-
-  .bg-fly-circle2 {
-    left: 3%;
-    top: 60%;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: linear-gradient(
-      to right,
-      rgba(100, 84, 239, 0.08) 0%,
-      rgba(48, 33, 236, 0.04) 100%
-    );
-    animation: move 3s linear infinite;
-  }
-
-  .bg-fly-circle3 {
-    right: 2%;
-    top: 140px;
-    width: 145px;
-    height: 145px;
-    border-radius: 50%;
-    background: linear-gradient(
-      to right,
-      rgba(100, 84, 239, 0.1) 0%,
-      rgba(48, 33, 236, 0.04) 100%
-    );
-    animation: move 2.5s linear infinite;
-  }
-
-  .bg-fly-circle4 {
-    right: 5%;
-    top: 60%;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: linear-gradient(
-      to right,
-      rgba(100, 84, 239, 0.02) 0%,
-      rgba(48, 33, 236, 0.04) 100%
-    );
-    animation: move 3.5s linear infinite;
-  }
-}
-
 @keyframes move {
   0% {
     transform: translateY(0px);
@@ -182,9 +138,15 @@ html[data-theme="dark"] {
   }
 }
 
-html[data-theme='dark'] {
+
+html[data-theme="dark"] {
+
   .login-box {
-    border: 1px solid #393939;
+    border: none;
+  }
+
+  .logo-name, .slogan1, .slogan2 {
+    color: #fff;
   }
 }
 

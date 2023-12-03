@@ -33,7 +33,7 @@ const menus = [
 </script>
 
 <template>
-  <Layout :index="3">
+  <Layout :index="4">
     <SubViewLayout title="我的设置" :menus="menus" />
   </Layout>
 </template>

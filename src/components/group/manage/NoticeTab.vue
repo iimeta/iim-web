@@ -1,93 +1,93 @@
 <script setup>
-import { ref, computed, reactive } from 'vue'
-import { NSpace, NEmpty } from 'naive-ui'
-import { Search, Plus } from '@icon-park/vue-next'
-import NoticeEditor from './NoticeEditor.vue'
-import { ServeGetGroupNotices } from '@/api/group'
+import { ref, computed, reactive } from "vue";
+import { NSpace, NEmpty } from "naive-ui";
+import { Search, Plus } from "@icon-park/vue-next";
+import NoticeEditor from "./NoticeEditor.vue";
+import { ServeGetGroupNotices } from "@/api/group";
 
 const props = defineProps({
   id: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const keywords = ref('')
-const batchDelete = ref(false)
-const items = ref([])
+const keywords = ref("");
+const batchDelete = ref(false);
+const items = ref([]);
 const editor = reactive({
   isShow: false,
-  id: '',
+  id: "",
   gid: 0,
-  title: '',
-  content: '',
-})
+  title: "",
+  content: "",
+});
 
 const filterCheck = computed(() => {
-  return items.value.filter(item => item.is_delete)
-})
+  return items.value.filter((item) => item.is_delete);
+});
 
 const filterSearch = computed(() => {
   if (!keywords.value.length) {
-    return items.value
+    return items.value;
   }
 
-  return items.value.filter(item => {
-    return item.title.match(keywords.value) != null
-  })
-})
+  return items.value.filter((item) => {
+    return item.title.match(keywords.value) != null;
+  });
+});
 
 const onLoadData = () => {
   ServeGetGroupNotices({
     group_id: props.id,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      items.value = res.data.items || []
+      items.value = res.data.items || [];
     }
-  })
-}
+  });
+};
 
 const onBatchDelete = () => {
   if (!filterCheck.value.length) {
-    return
+    return;
   }
 
-  let ids = filterCheck.value.map(item => item.user_id).join(',')
-}
+  let ids = filterCheck.value.map((item) => item.user_id).join(",");
+};
 
-const onRowClick = item => {
+const onRowClick = (item) => {
   if (batchDelete.value == true) {
   } else {
-    editor.id = item.id
-    editor.gid = props.id
-    editor.title = item.title
-    editor.content = item.content
-    editor.isShow = true
+    editor.id = item.id;
+    editor.gid = props.id;
+    editor.title = item.title;
+    editor.content = item.content;
+    editor.isShow = true;
   }
-}
+};
 
 const onAdd = () => {
-  editor.id = ''
-  editor.gid = props.id
-  editor.title = ''
-  editor.content = ''
-  editor.isShow = true
-}
+  editor.id = "";
+  editor.gid = props.id;
+  editor.title = "";
+  editor.content = "";
+  editor.isShow = true;
+};
 
 const onCancelDelete = () => {
-  items.value.forEach(item => {
-    item.is_delete = false
-  })
+  items.value.forEach((item) => {
+    item.is_delete = false;
+  });
 
-  batchDelete.value = false
-}
+  batchDelete.value = false;
+};
 
 const onEditorSuccess = () => {
-  editor.isShow = false
-  onLoadData()
-}
+  editor.isShow = false;
+  onLoadData();
+};
 
-onLoadData()
+onLoadData();
 </script>
 <template>
   <section class="section el-container is-vertical height100">
@@ -221,7 +221,7 @@ onLoadData()
 
   &:hover {
     .item-title {
-      color: #2196f3;
+      color: #ee9028;
     }
   }
 }

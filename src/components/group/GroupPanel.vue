@@ -1,48 +1,48 @@
 <script setup lang="ts">
-import { reactive, computed, watch, ref, inject } from 'vue'
-import { NEmpty, NPopover, NPopconfirm } from 'naive-ui'
-import { useUserStore } from '@/store/user'
-import GroupLaunch from './GroupLaunch.vue'
-import GroupManage from './manage/index.vue'
-import { Comment, Search, Close, Plus } from '@icon-park/vue-next'
+import { reactive, computed, watch, ref, inject } from "vue";
+import { NEmpty, NPopover, NPopconfirm } from "naive-ui";
+import { useUserStore } from "@/store/user";
+import GroupLaunch from "./GroupLaunch.vue";
+import GroupManage from "./manage/index.vue";
+import { Comment, Search, Close, Plus } from "@icon-park/vue-next";
 import {
   ServeGroupDetail,
   ServeGetGroupMembers,
   ServeSecedeGroup,
   ServeUpdateGroupCard,
-} from '@/api/group'
+} from "@/api/group";
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 
-const user: any = inject('$user')
+const user: any = inject("$user");
 
-const emit = defineEmits(['close', 'to-talk'])
+const emit = defineEmits(["close", "to-talk"]);
 const props = defineProps({
   gid: {
     type: Number,
     default: 0,
   },
-})
+});
 
 watch(props, () => {
-  loadDetail()
-  loadMembers()
-})
+  loadDetail();
+  loadMembers();
+});
 
-const editCardPopover = ref(false)
-const isShowGroup = ref(false)
-const isShowManage = ref(false)
+const editCardPopover = ref(false);
+const isShowGroup = ref(false);
+const isShowManage = ref(false);
 const state = reactive({
-  keywords: '',
+  keywords: "",
   detail: {
-    avatar: '',
-    name: '',
-    profile: '',
-    visit_card: '',
+    avatar: "",
+    name: "",
+    profile: "",
+    visit_card: "",
   },
   members: [],
-  user_card: '',
-})
+  user_card: "",
+});
 
 const search = computed(() => {
   if (state.keywords) {
@@ -50,30 +50,30 @@ const search = computed(() => {
       return (
         item.nickname.match(state.keywords) != null ||
         item.user_card.match(state.keywords) != null
-      )
-    })
+      );
+    });
   }
 
-  return state.members
-})
+  return state.members;
+});
 
 const isLeader = computed(() => {
   return state.members.some((item: any) => {
-    return item.user_id == userStore.uid && item.leader >= 1
-  })
-})
+    return item.user_id == userStore.uid && item.leader >= 1;
+  });
+});
 
 const isAdmin = computed(() => {
   return state.members.some((item: any) => {
-    return item.user_id == userStore.uid && item.leader == 2
-  })
-})
+    return item.user_id == userStore.uid && item.leader == 2;
+  });
+});
 
-const onGroupCallBack = () => {}
+const onGroupCallBack = () => {};
 
 const onToInfo = (item: any) => {
-  user(item.user_id)
-}
+  user(item.user_id);
+};
 
 /**
  * 加载群信息
@@ -81,20 +81,20 @@ const onToInfo = (item: any) => {
 function loadDetail() {
   ServeGroupDetail({
     group_id: props.gid,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      let result = res.data
-      state.detail.avatar = result.avatar
-      state.detail.name = result.group_name
-      state.detail.profile = result.profile
-      state.detail.visit_card = result.visit_card
-      state.user_card = result.visit_card
+      let result = res.data;
+      state.detail.avatar = result.avatar;
+      state.detail.name = result.group_name;
+      state.detail.profile = result.profile;
+      state.detail.visit_card = result.visit_card;
+      state.user_card = result.visit_card;
 
       if (result.notice) {
-        state.detail.group_notice = result.notice
+        state.detail.group_notice = result.notice;
       }
     }
-  })
+  });
 }
 
 /**
@@ -103,29 +103,29 @@ function loadDetail() {
 function loadMembers() {
   ServeGetGroupMembers({
     group_id: props.gid,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      state.members = res.data.items || []
+      state.members = res.data.items || [];
     }
-  })
+  });
 }
 
 const onClose = () => {
-  emit('close')
-}
+  emit("close");
+};
 
 const onSignOut = () => {
   ServeSecedeGroup({
     group_id: props.gid,
-  }).then(res => {
+  }).then((res) => {
     if (res.code == 200) {
-      window['$message'].success('已退出群聊')
-      onClose()
+      window["$message"].success("已退出群聊");
+      onClose();
     } else {
-      window['$message'].error(res.message)
+      window["$message"].error(res.message);
     }
-  })
-}
+  });
+};
 
 const onChangeRemark = () => {
   ServeUpdateGroupCard({
@@ -133,19 +133,19 @@ const onChangeRemark = () => {
     visit_card: state.user_card,
   }).then(({ code, message }) => {
     if (code == 200) {
-      editCardPopover.value.setShow(false)
-      state.detail.visit_card = state.user_card
-      window['$message'].success('已更新群名片')
+      editCardPopover.value.setShow(false);
+      state.detail.visit_card = state.user_card;
+      window["$message"].success("已更新群名片");
 
-      loadMembers()
+      loadMembers();
     } else {
-      window['$message'].error(message)
+      window["$message"].error(message);
     }
-  })
-}
+  });
+};
 
-loadDetail()
-loadMembers()
+loadDetail();
+loadMembers();
 </script>
 <template>
   <section class="el-container is-vertical section">
@@ -201,7 +201,7 @@ loadMembers()
               </n-popover>
             </div>
           </div>
-          <div class="describe">{{ state.detail.visit_card || '未设置' }}</div>
+          <div class="describe">{{ state.detail.visit_card || "未设置" }}</div>
         </div>
 
         <div class="b-box">
@@ -217,7 +217,7 @@ loadMembers()
             <div class="title">群简介：</div>
           </div>
           <div class="describe">
-            {{ state.detail.profile ? state.detail.profile : '暂无群简介' }}
+            {{ state.detail.profile ? state.detail.profile : "暂无群简介" }}
           </div>
         </div>
 
@@ -273,14 +273,14 @@ loadMembers()
               />
             </div>
             <div class="nickname text-ellipsis">
-              <span>{{ item.nickname ? item.nickname : '-' }}</span>
+              <span>{{ item.nickname ? item.nickname : "-" }}</span>
               <span class="badge master" v-show="item.leader === 2">群主</span>
               <span class="badge leader" v-show="item.leader === 1"
                 >管理员</span
               >
             </div>
             <div class="card text-ellipsis grey">
-              {{ item.user_card || '-' }}
+              {{ item.user_card || "-" }}
             </div>
           </div>
 
@@ -435,7 +435,7 @@ loadMembers()
           margin: 3px 0;
           &:hover {
             .nickname {
-              color: #1890ff;
+              color: #ee9028;
             }
           }
         }

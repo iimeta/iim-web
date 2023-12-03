@@ -1,47 +1,47 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { useEditorStore } from '@/store/editor'
-import { UploadOne, Delete } from '@icon-park/vue-next'
-import { emojiList as emoji } from '@/utils/emojis'
+import { ref, computed } from "vue";
+import { useEditorStore } from "@/store/editor";
+import { UploadOne, Delete } from "@icon-park/vue-next";
+import { emojiList as emoji } from "@/utils/emojis";
 
-const emit = defineEmits(['on-select'])
-const editorStore = useEditorStore()
-const fileImageRef = ref()
-const tabIndex = ref(0)
-const items = computed(() => editorStore.emoticon.items)
+const emit = defineEmits(["on-select"]);
+const editorStore = useEditorStore();
+const fileImageRef = ref();
+const tabIndex = ref(0);
+const items = computed(() => editorStore.emoticon.items);
 
 // 触发上传按钮事件
 const onTriggerUpload = () => {
-  fileImageRef.value.click()
-}
+  fileImageRef.value.click();
+};
 
 // 上传表情包
-const onUpload = e => {
-  let file = e.target.files[0]
+const onUpload = (e) => {
+  let file = e.target.files[0];
 
-  editorStore.uploadUserEmoticon(file)
-}
+  editorStore.uploadUserEmoticon(file);
+};
 
 // 删除表情包
 const onDelete = (index, id) => {
-  editorStore.removeUserEmoticon({ index, id })
-}
+  editorStore.removeUserEmoticon({ index, id });
+};
 
-const onTabs = index => {
-  tabIndex.value = index
-}
+const onTabs = (index) => {
+  tabIndex.value = index;
+};
 
-const onSendEmoticon = (type, value, img = '') => {
+const onSendEmoticon = (type, value, img = "") => {
   if (img) {
-    const imgSrcReg = /<img.*?src='(.*?)'/g
-    let match = imgSrcReg.exec(img)
+    const imgSrcReg = /<img.*?src='(.*?)'/g;
+    let match = imgSrcReg.exec(img);
     if (match) {
-      emit('on-select', { type, value, img: match[1] })
+      emit("on-select", { type, value, img: match[1] });
     }
   } else {
-    emit('on-select', { type, value, img })
+    emit("on-select", { type, value, img });
   }
-}
+};
 </script>
 <template>
   <form enctype="multipart/form-data" style="display: none">
@@ -128,7 +128,7 @@ const onSendEmoticon = (type, value, img = '') => {
     padding: 0 10px;
 
     .sys-btn {
-      color: #409eff;
+      color: #d4a978;
       cursor: pointer;
     }
   }
@@ -271,7 +271,7 @@ const onSendEmoticon = (type, value, img = '') => {
   }
 }
 
-html[data-theme='dark'] {
+html[data-theme="dark"] {
   .collect-box .item {
     background-color: #2c2c32;
   }

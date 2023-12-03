@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import { NForm, NFormItem, NInput } from "naive-ui";
+import { NForm, NFormItem, NInput, NConfigProvider } from "naive-ui";
 import { ServeForgetPassword } from "@/api/auth";
 import { ServeSendVerifyCode, ServeSendEmailCode } from "@/api/common";
 import SmsLock from "@/plugins/sms-lock";
@@ -105,12 +105,14 @@ const onSendSms = () => {
     channel: "forget_account",
   });
 
+  lock.start();
+  
   response.then((res) => {
     if (res.code == 200) {
-      lock.start();
       window["$message"].success("验证码发送成功");
     } else {
       window["$message"].warning(res.message);
+      lock.end();
     }
   });
 
@@ -131,12 +133,14 @@ const onSendEmail = () => {
     channel: "forget_account",
   });
 
+  lock.start();
+
   response.then((res) => {
     if (res.code == 200) {
-      lock.start();
       window["$message"].success("验证码发送成功");
     } else {
       window["$message"].warning(res.message);
+      lock.end();
     }
   });
 
@@ -151,68 +155,73 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="el-container is-vertical login-box forget">
-    <header class="el-header box-header">找回密码</header>
+  <n-config-provider :theme="null">
+    <section class="el-container is-vertical login-box forget">
+      <header class="el-header box-header">
+        <i class="login-box-logo" />
+        找回密码
+      </header>
 
-    <main class="el-main" style="padding: 3px">
-      <n-form ref="formRef" size="large" :model="model" :rules="rules">
-        <n-form-item path="username" :show-label="false">
-          <n-input
-            placeholder="邮箱"
-            v-model:value="model.username"
-            @keydown.enter.native="onValidate"
-          />
-        </n-form-item>
+      <main class="el-main" style="padding: 3px">
+        <n-form ref="formRef" size="large" :model="model" :rules="rules">
+          <n-form-item path="username" :show-label="false">
+            <n-input
+              placeholder="邮箱"
+              v-model:value="model.username"
+              @keydown.enter.native="onValidate"
+            />
+          </n-form-item>
 
-        <n-form-item path="code" :show-label="false">
-          <n-input
-            placeholder="验证码"
-            :maxlength="6"
-            v-model:value="model.code"
-            @keydown.enter.native="onValidate"
-          />
+          <n-form-item path="code" :show-label="false">
+            <n-input
+              placeholder="验证码"
+              :maxlength="6"
+              v-model:value="model.code"
+              @keydown.enter.native="onValidate"
+            />
+            <n-button
+              tertiary
+              class="mt-l5"
+              @click="onSendEmail"
+              :disabled="lockTime > 0"
+            >
+              获取验证码 <span v-show="lockTime > 0">({{ lockTime }}s)</span>
+            </n-button>
+          </n-form-item>
+
+          <n-form-item path="password" :show-label="false">
+            <n-input
+              placeholder="设置密码"
+              type="password"
+              show-password-on="click"
+              v-model:value="model.password"
+              @keydown.enter.native="onValidate"
+            />
+          </n-form-item>
+
           <n-button
-            tertiary
-            class="mt-l5"
-            @click="onSendEmail"
-            :disabled="lockTime > 0"
+            type="primary"
+            size="large"
+            block
+            class="mt-t20"
+            @click="onValidate"
+            :loading="model.loading"
           >
-            获取验证码 <span v-show="lockTime > 0">({{ lockTime }}s)</span>
+            立即找回
           </n-button>
-        </n-form-item>
+        </n-form>
 
-        <n-form-item path="password" :show-label="false">
-          <n-input
-            placeholder="设置密码"
-            type="password"
-            show-password-on="click"
-            v-model:value="model.password"
-            @keydown.enter.native="onValidate"
-          />
-        </n-form-item>
-
-        <n-button
-          type="primary"
-          size="large"
-          block
-          class="mt-t20"
-          @click="onValidate"
-          :loading="model.loading"
-        >
-          立即找回
-        </n-button>
-      </n-form>
-
-      <div class="helper">
-        <n-button text color="#409eff" @click="router.push('/auth/register')">
-          注册账号
-        </n-button>
-        <n-button text color="#409eff" @click="router.push('/auth/login')">
-          已有账号，立即登录?
-        </n-button>
-      </div>
-    </main>
-  </section>
+        <div class="helper">
+          <n-button text color="#D4A978" @click="router.push('/auth/register')">
+            注册账号
+          </n-button>
+          <n-button text color="#D4A978" @click="router.push('/auth/login')">
+            已有账号，立即登录?
+          </n-button>
+        </div>
+      </main>
+    </section>
+  </n-config-provider>
 </template>
 
 <style lang="less" scoped>

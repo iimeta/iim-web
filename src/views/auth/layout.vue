@@ -5,32 +5,17 @@ import { GithubOne } from "@icon-park/vue-next";
 </script>
 
 <template>
-  <!-- <div id="logo-name" v-if="!isElectronMode()">IIM</div> -->
   <div>
     <img class="logo" src="/logo.png" />
     <span class="logo-name">智元 IIM</span>
   </div>
-
+  <div>
+    <div class="slogan1">IIM 你的专属助手</div>
+    <div class="slogan2">激发创意  让工作与生活更轻松</div>
+  </div>
   <section class="section">
     <router-view />
   </section>
-
-  <div class="copyright">
-    <span><b>Copyright © 2023 IIM. All Rights Reserved.</b></span>
-    <br />
-    <a href="https://github.com/iimeta/iim-client" target="_blank"
-      ><span
-        ><b>v{{ config.version }}</b></span
-      ></a
-    >
-  </div>
-
-  <div class="fly-box">
-    <div class="fly bg-fly-circle1"></div>
-    <div class="fly bg-fly-circle2"></div>
-    <div class="fly bg-fly-circle3"></div>
-    <div class="fly bg-fly-circle4"></div>
-  </div>
 </template>
 
 <style lang="less" scoped>

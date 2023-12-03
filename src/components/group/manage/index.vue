@@ -1,34 +1,34 @@
 <script setup>
-import { ref } from 'vue'
-import { NModal } from 'naive-ui'
-import DetailTab from './DetailTab.vue'
-import MemberTab from './MemberTab.vue'
-import NoticeTab from './NoticeTab.vue'
-import ApplyTab from './ApplyTab.vue'
-import ConfigTab from './ConfigTab.vue'
+import { ref } from "vue";
+import { NModal } from "naive-ui";
+import DetailTab from "./DetailTab.vue";
+import MemberTab from "./MemberTab.vue";
+import NoticeTab from "./NoticeTab.vue";
+import ApplyTab from "./ApplyTab.vue";
+import ConfigTab from "./ConfigTab.vue";
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(["close"]);
 
 const props = defineProps({
   gid: {
     type: Number,
     default: 0,
   },
-})
+});
 
-const isShowBox = ref(true)
-const tabIndex = ref(0)
+const isShowBox = ref(true);
+const tabIndex = ref(0);
 const menus = [
-  { name: '群信息', component: DetailTab },
-  { name: '群成员', component: MemberTab },
-  { name: '群公告', component: NoticeTab },
-  { name: '群申请', component: ApplyTab },
-  { name: '群设置', component: ConfigTab },
-]
+  { name: "群信息", component: DetailTab },
+  { name: "群成员", component: MemberTab },
+  { name: "群公告", component: NoticeTab },
+  { name: "群申请", component: ApplyTab },
+  { name: "群设置", component: ConfigTab },
+];
 
 const onMaskClick = () => {
-  emit('close')
-}
+  emit("close");
+};
 </script>
 
 <template>
@@ -86,8 +86,8 @@ const onMaskClick = () => {
   text-align: center;
 
   &.selectd {
-    color: #2196f3;
-    border-color: #2196f3;
+    color: #ee9028;
+    border-color: #ee9028;
   }
 }
 </style>

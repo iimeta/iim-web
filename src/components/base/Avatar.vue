@@ -36,7 +36,8 @@ defineProps({
     round
     :style="{
       color: '#ffffff',
-      backgroundColor: hashStrToHexColor(username || ''),
+      // backgroundColor: hashStrToHexColor(username || ''),
+      backgroundColor: '#EE9028',
       fontSize: fontSize + 'px',
     }"
     :size="size"

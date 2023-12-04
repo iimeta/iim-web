@@ -54,14 +54,21 @@ ServeVips({}).then((res) => {
   margin-top: 50px;
   .vip-item {
     height: 260px;
-    width: 360px;
+    width: 25%;
     border-radius: 10px;
     margin-bottom: 20px;
     margin-left: 50px;
     padding: 20px;
     .name {
       font-size: 20px;
+      color: #fff;
     }
+  }
+}
+
+html[data-theme="light"] {
+  .vip {
+    color: #E3E3E3;
   }
 }
 </style>

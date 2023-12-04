@@ -21,8 +21,11 @@ ServeInviteFriends({}).then((res) => {
       const url = new URL(window.location.href);
       baseURL = `${url.protocol}//${url.hostname}`;
       if (url.port) {
-        if ((url.protocol == "https:" && url.port != 443) || (url.protocol == "http:" && url.port != 80)){
-          baseURL = baseURL+`:${url.port}`;
+        if (
+          (url.protocol == "https:" && url.port != 443) ||
+          (url.protocol == "http:" && url.port != 80)
+        ) {
+          baseURL = baseURL + `:${url.port}`;
         }
       }
     }
@@ -43,15 +46,15 @@ const onCopy = () => {
     <div class="invite">
       <span class="inviteUrl">邀请链接: {{ inviteFriends.invite_url }}</span>
       <span class="tools">
-        <n-button type="primary" text @click="onCopy"> 复制 </n-button>
+        <n-button type="primary" text @click="onCopy" size="large"> 复制 </n-button>
       </span>
       <p class="inviteUrl mt10">邀请人数: {{ inviteFriends.items.length }}</p>
     </div>
     <div class="table el-main scroller me-scrollbar me-scrollbar-thumb">
       <div class="theader">
-        <div>昵称</div>
-        <div>邮箱</div>
-        <div>注册时间</div>
+        <div><b>昵称</b></div>
+        <div><b>账号</b></div>
+        <div><b>注册时间</b></div>
       </div>
 
       <div class="row" v-for="item in inviteFriends.items" :key="item.email">
@@ -75,16 +78,16 @@ const onCopy = () => {
   font-size: 18px;
 }
 .table {
-  width: 100%;
-
   .theader {
-    width: 100%;
-    border-bottom: 1px solid var(--border-color);
+    border: 1px solid #646464;
     font-size: 16px;
+    border-radius: 5px 5px 0 0;
+    background-color: #303033;
   }
 
   .row {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #646464;
+    background-color: #303033;
   }
 
   .theader,
@@ -103,6 +106,20 @@ const onCopy = () => {
       width: 150px;
       display: inline-block;
     }
+  }
+}
+
+html[data-theme="light"] {
+  .theader {
+    border: 1px solid #d4d4d4;
+    background-color: #f7f7f7;
+    color: #666666;
+  }
+
+  .row {
+    border-bottom: 1px solid #d4d4d4;
+    background-color: #f7f7f7;
+    color: #666666;
   }
 }
 </style>

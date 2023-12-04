@@ -80,21 +80,38 @@ const onCopySecretKey = () => {
         </div>
       </div>
     </main>
-    <footer>
+    <footer class="ml20">
       <div class="api-infos">
-        <div class="api-info-item ml20">
+        <div class="api-info-item mr20">
           <div class="title">免费额度</div>
           <div class="text orange">
             {{ detail.used_tokens }} / {{ detail.total_tokens }}
           </div>
           <div class="footer-text">每日在线30分钟, 零点可获得免费额度</div>
         </div>
-        <div class="api-info-item ml20">
+        <div class="api-info-item mr20">
           <div class="title">使用次数</div>
           <div class="text orange">{{ detail.usage_count }}</div>
           <div class="footer-text">每天0点刷新使用次数</div>
         </div>
-        <div class="api-info-item ml20">
+        <div class="api-info-item mr20">
+          <div class="title">交流群</div>
+          <div class="group">
+            <n-space>
+              <n-image
+                width="70"
+                class="ml30"
+                src="https://image.iim.ai/public/images/QQGroup.png"
+              />
+              <n-image
+                width="70"
+                class="ml50"
+                src="https://image.iim.ai/public/images/WeChatGroup.png"
+              />
+            </n-space>
+          </div>
+        </div>
+        <div class="api-info-item mr20">
           <div class="title">API 密钥</div>
           <div class="text">{{ detail.secret_key || "-" }}</div>
           <div class="footer-button">
@@ -120,7 +137,7 @@ const onCopySecretKey = () => {
             </span>
           </div>
         </div>
-        <div class="api-info-item ml20">
+        <div class="api-info-item mr20">
           <div class="title">API 接口</div>
           <div class="text">https://api.iim.ai</div>
           <div class="footer-button">
@@ -134,23 +151,6 @@ const onCopySecretKey = () => {
                 <n-button type="primary" text size="large"> 备用 </n-button>
               </span>
             </a>
-          </div>
-        </div>
-        <div class="api-info-item ml20">
-          <div class="title">交流群</div>
-          <div class="group">
-            <n-space>
-              <n-image
-                width="70"
-                class="ml30"
-                src="https://image.iim.ai/public/images/QQGroup.png"
-              />
-              <n-image
-                width="70"
-                class="ml50"
-                src="https://image.iim.ai/public/images/WeChatGroup.png"
-              />
-            </n-space>
           </div>
         </div>
       </div>
@@ -170,11 +170,12 @@ const onCopySecretKey = () => {
     .name {
       width: 70px;
       flex-shrink: 0;
-      color: #625f5f;
+      color: #e3e3e3;
     }
 
     .text {
       margin-left: 5px;
+      color: #e3e3e3;
     }
   }
 }
@@ -186,7 +187,9 @@ const onCopySecretKey = () => {
 
   .api-info-item {
     height: 150px;
-    width: 300px;
+    width: 30%;
+    min-width: 300px;
+    max-width: 450px;
     align-items: center;
     background-color: #303033;
     border-radius: 10px;
@@ -196,18 +199,18 @@ const onCopySecretKey = () => {
       font-size: 18px;
       text-align: center;
       flex-shrink: 0;
-      color: #fff;
+      color: #e3e3e3;
       margin-top: 20px;
     }
 
     .text {
-      width: 260px;
       font-size: 20px;
       text-align: center;
       margin: 20px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      color: #e3e3e3;
     }
 
     .orange {
@@ -241,11 +244,32 @@ const onCopySecretKey = () => {
   margin-top: 21px;
 }
 
-html[data-theme="dark"] {
+html[data-theme="light"] {
   .infos {
     .info-item {
       .name {
-        color: #afabab;
+        color: #333;
+      }
+
+      .text {
+        color: #333;
+      }
+    }
+  }
+  .api-infos {
+    .api-info-item {
+      background-color: #eeeeee;
+      .title {
+        color: #333333;
+      }
+      .text {
+        color: #333333;
+      }
+      .orange {
+        color: #ee9028;
+      }
+      .footer-text {
+        color: #6F6C6C;
       }
     }
   }

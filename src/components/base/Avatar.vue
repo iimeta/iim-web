@@ -37,7 +37,7 @@ defineProps({
     :style="{
       color: '#ffffff',
       // backgroundColor: hashStrToHexColor(username || ''),
-      backgroundColor: '#EE9028',
+      backgroundColor: '#EA8D24',
       fontSize: fontSize + 'px',
     }"
     :size="size"

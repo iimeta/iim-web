@@ -57,7 +57,7 @@
   "build": {
     "appId": "ai.iim",
     "productName": "IIM",
-    "copyright": "Copyright © 2023 IIM",
+    "copyright": "Copyright © 2023-2024 IIM",
     "mac": {
       "category": "public.app-category.utilities",
       "icon": "build/icons/iim-mac.png"

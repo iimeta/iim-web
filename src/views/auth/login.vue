@@ -125,7 +125,7 @@ const onValidate = (e) => {
             >
           </a>
           <br />
-          <span>Copyright © 2023 IIM. All Rights Reserved.</span>
+          <span>Copyright © 2023-2024 IIM. All Rights Reserved.</span>
         </div>
       </main>
     </section>
